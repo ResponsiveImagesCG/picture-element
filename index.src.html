@@ -308,9 +308,9 @@ span.note, span.issue {
   <div class="example-title"><span>Example 1</span></div>
   <pre class="example">&lt;picture width="500" height="500"&gt;
    &lt;source media="(min-width: 45em)" src="large.jpg"&gt;
- 	&lt;source media="(min-width: 18em)" src="med.jpg"&gt;
- 	&lt;source src="small.jpg"&gt;
-  	&lt;img src="small.jpg" alt=""&gt;
+   &lt;source media="(min-width: 18em)" src="med.jpg"&gt;
+   &lt;source src="small.jpg"&gt;
+   &lt;img src="small.jpg" alt=""&gt;
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;</pre>
 </div>
@@ -325,9 +325,9 @@ span.note, span.issue {
   <div class="example-title"><span>Example 2</span></div>
   <pre class="example">&lt;picture width="500" height="500"&gt;
    &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
- 	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
- 	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;
-  	&lt;img src="small-1.jpg" alt=""&gt;
+   &lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
+   &lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;
+   &lt;img src="small-1.jpg" alt=""&gt;
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;</pre>
 </div>
@@ -395,10 +395,10 @@ HTMLPictureElement : HTMLImageElement{
     <p>So, to derive the <dfn id="dfn-source-image">source image</dfn>: we gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a "stylesheet", in document order. Any missing <code>media</code> attributes are just assumed to mean "all". Any media attributes that are not valid media queries are ignored. So, given the following: </p>
     <pre>&lt;picture id="pictureElement"&gt;
 <span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
- 	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
+   &lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
    
    &lt;!-- assume media all --&gt; 
- 	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;</span>
+   &lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;</span>
    
    &lt;!-- the following are ignored --&gt;
 <span class="example">   &lt;source media=" is the message " srcset=""&gt;
