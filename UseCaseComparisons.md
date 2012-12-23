@@ -15,7 +15,7 @@ Assuming three image “breakpoints” based on maximum widths, using pixel-base
 
 **Extended `srcset`**
 ```
-<img src="image1.jpg" srcset="image1.jpg, image1.jpg 400w, image2.jpg 600w" alt="">
+<img src="image1.jpg" srcset="image1.jpg 400w, image2.jpg 600w, image3.jpg 800w" alt="">
 ```
 
 
