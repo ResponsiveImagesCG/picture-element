@@ -444,7 +444,7 @@ HTMLPictureElement : HTMLImageElement{
   </div>
 </div>
 <h2 id="algorithm-for-deriving-the-source-image"><span class="secno">5 </span>Algorithm for deriving the source image</h2>
-<p>The <dfn id="dfn-algorithm-for-deriving-the-source-image">algorithm for deriving the source image</dfn> as follows. The result is the image source to be used by the <code><a href="#dfn-picture">picture</a></code> element, which reflects  the <code><a href="#dfn-picture">picture</a></code> element's <span><code>src</code> IDL attribute</span>: </p>
+<p>The <dfn id="dfn-algorithm-for-deriving-the-source-image">algorithm for deriving the source image</dfn> follows the <a href="http://www.w3.org/TR/2011/WD-html5-20110113/video.html#concept-media-load-algorithm">resource selection algorithm for media elements</a>. The result is the image source to be used by the <code><a href="#dfn-picture">picture</a></code> element, which reflects the <code><a href="#dfn-picture">picture</a></code> element's <span><code>src</code> IDL attribute</span>: </p>
 <div class="note">
   <div class="note-title"><span>Note</span></div>
   <div class="">
@@ -463,12 +463,6 @@ HTMLPictureElement : HTMLImageElement{
 &lt;/picture&gt;</pre>
     <p>Becomes the rough CSS equivalent of (a virtual stylesheet for the document?):</p>
     <pre>//assume #pictureElement is magically scoped to the corresponding element. 
-@media all{
-   #pictureElement{
-      background-image: image-set(<span class="example">small-1.jpg 1x, small-2.jpg 2x</span>);
-   }
-}
-
 @media<span class="example"> all and (min-width: 45em)</span>{
    #pictureElement{      
       background-image: image-set(<span class="example">large-1.jpg 1x, large-2.jpg 2x</span>);
@@ -478,6 +472,12 @@ HTMLPictureElement : HTMLImageElement{
 @media <span class="example">all and </span><span class="example">(min-width: 18em)</span>{
    #pictureElement{      
       background-image: image-set(<span class="example">med-1.jpg 1x, med-2.jpg 2x</span>);
+   }
+}
+
+@media all{
+   #pictureElement{
+      background-image: image-set(<span class="example">small-1.jpg 1x, small-2.jpg 2x</span>);
    }
 }</pre>
     <p>The API then just works the same as per images. Events are fired in the same way as if the image's src IDL attribute had been set manually by the author. </p>
