@@ -293,12 +293,12 @@ span.note, span.issue {
 <!--[if lt IE 9]><script src='http://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
 <style class="w3c ricg">
   .w3c{
-		border: 1px solid blue; 
+		border: 1px solid blue;
 	}
-	
+
 .ricg{
-		border: 1px solid red; 
-}	
+		border: 1px solid red;
+}
 
 span, cite{
 	border: 1px dotted green;
@@ -454,6 +454,12 @@ span span{
   <dd>Zero or one <code>img</code> element, serving as <a href="#dfn-fallback-content" class="internalDFN">fallback content</a>.</dd>
   <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:</dt>
   <dd><a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global attributes</a></dd>
+  <dd><code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code></dd>
+  <dd><code title="attr-picture-src"><a href="#attr-picture-src">src</a></code></dd>
+  <dd><code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code></dd>
+  <dd><code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code></dd>
+  <dd><code title="attr-hyperlink-usemap"><a href="#attr-hyperlink-usemap">usemap</a></code></dd>
+  <dd><code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code></dd>
   <dd><code>width</code></dd>
   <dd><code>height</code></dd>
   <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
@@ -462,11 +468,22 @@ span span{
  NamedConstructor=Picture(unsigned long width),
  NamedConstructor=Picture(unsigned long width, unsigned long height)]
 HTMLPictureElement : HTMLImageElement{
-   readonly attribute DOMString media; 
+   attribute DOMString <a href="#dom-picture-alt" title="dom-picture-alt">alt</a>;
+   attribute DOMString <a href="#dom-picture-src" title="dom-picture-src">src</a>;
+   attribute DOMString <a href="#dom-picture-crossorigin" title="dom-picture-crossOrigin">crossOrigin</a>;
+   attribute DOMString <a href="#dom-picture-srcset" title="dom-picture-srcset">srcset</a>;
+   attribute DOMString <a href="#dom-picture-usemap" title="dom-picture-useMap">useMap</a>;
+   attribute boolean <a href="#dom-picture-ismap" title="dom-picture-isMap">isMap</a>;
+   readonly attribute DOMString media;
 }</pre>
   </dd>
 </dl>
-<p>The <code><dfn id="dfn-picture">picture</dfn></code> element used for displaying an image that can come from a range of sources (see <code>srcset</code> attribute). Which image the user agent displays depends on the <a href="#dfn-algorithm-for-deriving-the-source-image" class="internalDFN">algorithm for deriving the source image</a>. </p>
+<p>The <code><dfn id="dfn-picture">picture</dfn></code> element used for displaying an image that can come from a range of sources (including the <dfn id="attr-picture-src" title="attr-picture-src"><code>src</code></dfn> and <dfn id="attr-picture-srcset" title="attr-picture-srcset"><code>srcset</code></dfn> attributes). Which image the user agent displays depends on the <a href="#dfn-algorithm-for-deriving-the-source-image" class="internalDFN">algorithm for deriving the source image</a>. The value of the <dfn id="attr-picture-alt" title="attr-picture-alt"><code>alt</code></dfn> attribute provides equivalent content for those who cannot process images or who have image loading disabled.</p>
+<p>The requirements on the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute's value are described <a href="http://www.w3.org/TR/html5/embedded-content-0.html#alt">in the <code>img</code> section</a>.</p>
+<p>The <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute may be present, and if present must contain a <a href="http://www.w3.org/TR/html5/infrastructure.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a> referencing a non-interactive, optionally animated, image resource that is neither paged nor scripted.</p>
+<p class="note">The requirements above imply that images can be static bitmaps (e.g. PNGs, GIFs, JPEGs), single-page vector documents (single-page PDFs, XML files with an SVG root element), animated bitmaps (APNGs, animated GIFs), animated vector graphics (XML files with an SVG root element that use declarative SMIL animation), and so forth. However, these definitions preclude SVG files with script, multipage PDF files, interactive MNG files, HTML documents, plain text documents, and so forth. <a href="http://www.w3.org/TR/html5/references.html#refsPNG">[PNG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsGIF">[GIF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsJPEG">[JPEG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsPDF">[PDF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsXML">[XML]</a> <a href="http://www.w3.org/TR/html5/references.html#refsAPNG">[APNG]</a> <!-- <a href="#refsAGIF">[AGIF]</a> --> <a href="http://www.w3.org/TR/html5/references.html#refsSVG">[SVG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsMNG">[MNG]</a></p>
+<p>The <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute may be present, and if present must conform to <a href="http://dev.w3.org/html5/srcset/">the <code>srcset</code> specification</a>.</p>
+<p>The <dfn id="attr-picture-crossorigin" title="attr-picture-crossorigin"><code>crossorigin</code></dfn> attribute is a <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">CORS settings attribute</a>. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <code><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-canvas-element">canvas</a></code>.</p>
 <p>On getting the <code>media</code> IDL attribute, the user agent <em class="rfc2119" title="must">must</em> return the media query that matches the current environment. </p>
 <p>It is <em class="rfc2119" title="recommended">recommended</em> that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. Authors can use the srcset attribute for simple resized image sources.</p>
 <p>The <span>chosen image</span> is the embedded content. </p>
@@ -479,27 +496,42 @@ HTMLPictureElement : HTMLImageElement{
     <p>It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See bug <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.</p>
   </div>
 </div>
+
+<hr>
+
+<p>The <code title="attr-hyperlink-usemap"><a href="#attr-hyperlink-usemap">usemap</a></code> attribute, if present, can indicate that the image has an associated <a href="http://www.w3.org/TR/html5/embedded-content-0.html#image-map">image map</a>.</p>
+<p>The <dfn id="attr-picture-ismap" title="attr-picture-ismap"><code>ismap</code></dfn> attribute, when used on an element that is a descendant of an <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute, indicates by its presence that the element provides access to a server-side image map. This affects how events are handled on the corresponding <code><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">a</a></code> element.</p>
+<p>The <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> attribute is a <a href="http://www.w3.org/TR/html5/infrastructure.html#boolean-attribute">boolean attribute</a>. The attribute must not be specified on an element that does not have an ancestor <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute.</p>
+
+<div class="impl">
+<p>The <dfn id="dom-picture-alt" title="dom-picture-alt"><code>alt</code></dfn>, <dfn id="dom-picture-src" title="dom-picture-src"><code>src</code></dfn>, <dfn id="dom-picture-srcset" title="dom-picture-srcset"><code>src</code></dfn>, IDL attributes must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the respective content attributes of the same name.</p>
+<p>The <dfn id="dom-picture-crossorigin" title="dom-picture-crossOrigin"><code>crossOrigin</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code> content attribute.</p>
+<p>The <dfn id="dom-picture-usemap" title="dom-picture-useMap"><code>useMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-hyperlink-usemap">usemap</code> content attribute.</p>
+<p>The <dfn id="dom-picture-ismap" title="dom-picture-isMap"><code>isMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> content attribute.</p>
+</div>
+
 <h2>Algorithm for deriving the source image</h2>
 <p>The <dfn id="dfn-algorithm-for-deriving-the-source-image">algorithm for deriving the source image</dfn> as follows. The result is the image source to be used by the <code>picture</code> element, which reflects  the <code>picture</code> element's <span><code>src</code> IDL attribute</span>: </p>
 <div class="note">
   <div class="note-title"><span>Note</span></div>
   <div class="">
+    <p>What a <code><a href="#the-picture-element">picture</a></code> element represents depends on the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute, <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute, the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute, and any child elements.</p>
     <p>What we want to do is have the <code>picture</code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element. </p>
     <p>So, to derive the <dfn id="dfn-source-image">source image</dfn>: ignoring any sources whose <code>type</code> is not supported by the browser, gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a "stylesheet", in document order. Any missing <code>media</code> attributes are just assumed to mean "all". Any media attributes that are not valid media queries are ignored. So, given the following: </p>
     <pre>&lt;picture id="pictureElement"&gt;
 <span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
    &lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
-   
-   &lt;!-- assume media all --&gt; 
+
+   &lt;!-- assume media all --&gt;
    &lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;</span>
-   
+
    &lt;!-- the following are ignored --&gt;
 <span class="example">   &lt;source media=" is the message " srcset=""&gt;
       </span>
 &lt;/picture&gt;</pre>
     <p>Becomes the rough CSS equivalent of (a virtual stylesheet for the document?):</p>
     <pre>
-//assume #pictureElement is magically scoped to the corresponding element. 
+//assume #pictureElement is magically scoped to the corresponding element.
 @media all{
    #pictureElement{
       background-image: image-set(<span class="example">small-1.jpg 1x, small-2.jpg 2x</span>);
@@ -507,13 +539,13 @@ HTMLPictureElement : HTMLImageElement{
 }
 
 @media<span class="example"> all and (min-width: 45em)</span>{
-   #pictureElement{      
+   #pictureElement{
       background-image: image-set(<span class="example">large-1.jpg 1x, large-2.jpg 2x</span>);
    }
 }
 
 @media <span class="example">all and </span><span class="example">(min-width: 18em)</span>{
-   #pictureElement{      
+   #pictureElement{
       background-image: image-set(<span class="example">med-1.jpg 1x, med-2.jpg 2x</span>);
    }
 }</pre>
@@ -522,7 +554,10 @@ HTMLPictureElement : HTMLImageElement{
   </div>
 </div>
 <p>A user agent <em class="rfc2119" title="may">may</em> override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
-<h2  class="no-num">Open Issues</h2>
+<p>The <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute does not represent advisory information. User agents must not present the contents of the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute in the same way as content of the <code title="attr-title"><a href="dom.html#attr-title">title</a></code> attribute.</p>
+<p class="warning">While user agents are encouraged to repair cases of missing <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attributes, authors must not rely on such behavior. <a href="http://www.w3.org/TR/html5/embedded-content-0.html#alt">Requirements for providing text to act as an alternative for images</a> are described in detail in the <code>img</code> section.</p>
+
+ <h2  class="no-num">Open Issues</h2>
 <p>We are tracking <dfn id="dfn-open-issues">open issues</dfn> on Github. <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">Please help close them</a>! </p>
 <div id="open-issues-xhr"> </div>
 <h2 class="no-toc no-num">Reference implementations</h2>
@@ -542,6 +577,6 @@ HTMLPictureElement : HTMLImageElement{
   <dt id="bib-WEBIDL">[WEBIDL]</dt>
   <dd><a href="http://www.w3.org/TR/WebIDL/"><cite>Web IDL.</cite></a> (<a href="http://www.w3.org/TR/WebIDL/#sotd">status</a>).</dd>
 </dl>
-<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script> 
-<script  class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script> 
+<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script>
+<script  class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script>
 <script  class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script>
