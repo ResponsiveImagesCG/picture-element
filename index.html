@@ -305,8 +305,8 @@
         <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">
           An HTML extension for adaptive images
         </h2>
-        <h2 class="no-num no-toc ricg" id="living-document-last-updated-24-april-2013">
-          Living document - Last updated 24 April 2013
+        <h2 class="no-num no-toc ricg" id="living-document-last-updated-1-may-2013">
+          Living document - Last updated 1 May 2013
         </h2>
         <dl>
           <dt>
@@ -319,7 +319,7 @@
             Latest W3C Published Version:
           </dt>
           <dd>
-            <a href="http://www.w3.org/TR/html-picture-element/">http://www.w3.org/TR/html-picture-element/</a>
+            <a href="http://www.w3.org/TR/picture-element/">http://www.w3.org/TR/picture-element/</a>
           </dd>
           <dd>
             <a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a>
@@ -715,9 +715,11 @@ HTMLPictureElement : HTMLImageElement{
    attribute DOMString <a href="#dom-picture-src" title="dom-picture-src">src</a>;
    attribute DOMString <a href="#dom-picture-crossorigin" title="dom-picture-crossOrigin">crossOrigin</a>;
    attribute DOMString <a href="#dom-picture-srcset" title="dom-picture-srcset">srcset</a>;
+   readonly attribute DOMString <a href="#dom-picture-currentsrc" title="dom-picture-currentsrc">currentSrc</a>;
    attribute DOMString <a href="#dom-picture-usemap" title="dom-picture-useMap">useMap</a>;
    attribute boolean <a href="#dom-picture-ismap" title="dom-picture-isMap">isMap</a>;
    readonly attribute DOMString media;
+   void <a href="#dom-picture-load" title="dom-picture-load">load</a>();
 }
 </pre>
       </dd>
@@ -740,8 +742,8 @@ HTMLPictureElement : HTMLImageElement{
       The <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute may be present, and if
       present must contain a <a href="http://www.w3.org/TR/html5/infrastructure.html#valid-non-empty-url-potentially-surrounded-by-spaces">
       valid non-empty URL potentially surrounded by spaces</a> referencing a
-      non-interactive, optionally animated, image resource that is neither
-      paged nor scripted.
+      non-interactive, optionally animated, <dfn id="image-resource">image resource</dfn> that is
+      neither paged nor scripted.
     </p>
     <p class="note">
       The requirements above imply that images can be static bitmaps (e.g.
@@ -750,13 +752,43 @@ HTMLPictureElement : HTMLImageElement{
       animated vector graphics (XML files with an SVG root element that use
       declarative SMIL animation), and so forth. However, these definitions
       preclude SVG files with script, multipage PDF files, interactive MNG
-      files, HTML documents, plain text documents, and so forth. <a href="http://www.w3.org/TR/html5/references.html#refsPNG">[PNG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsGIF">[GIF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsJPEG">[JPEG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsPDF">[PDF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsXML">[XML]</a> <a href="http://www.w3.org/TR/html5/references.html#refsAPNG">[APNG]</a> 
+      files, HTML documents, plain text documents, and so forth. <a href="http://www.w3.org/TR/html5/references.html#refsPNG">[PNG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsGIF">[GIF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsJPEG">[JPEG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsPDF">[PDF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsXML">[XML]</a> <a href="http://www.w3.org/TR/html5/references.html#refsAPNG">[APNG]</a>
       <!-- <a href="#refsAGIF">[AGIF]</a> --> <a href="http://www.w3.org/TR/html5/references.html#refsSVG">[SVG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsMNG">[MNG]</a>
     </p>
     <p>
       The <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute may be present, and if
       present must conform to <a href="http://dev.w3.org/html5/srcset/">the
       <code>srcset</code> specification</a>.
+    </p>
+    <dl class="domintro">
+      <dt>
+        <var><a href="#dfn-picture">picture</a></var> . <code>currentSrc</code>
+      </dt>
+      <dd>
+        <p>
+          Returns the address of the current <a href="#image-resource">image resource</a>.
+        </p>
+        <p>
+          Returns the empty string when there is no <a href="#image-resource">image
+          resource</a>.
+        </p>
+      </dd>
+    </dl>
+    <div class="impl">
+      <p>
+        The <dfn id="dom-picture-currentsrc" title="dom-picture-currentSrc"><code>currentSrc</code></dfn>
+        IDL attribute is initially the empty string. Its value is changed by
+        the <span title="dfn-algorithm-for-deriving-the-source-image">resource
+        selection algorithm</span> defined below.
+      </p>
+    </div>
+    <p class="note">
+      There are three ways to specify an <a href="#image-resource">image resource</a>, the
+      <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute, the <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute, or <code>source</code>
+      elements. The <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute
+      overrides both the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute
+      and the elements; the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute
+      overrides the elements.
     </p>
     <p>
       The <dfn id="attr-picture-crossorigin" title="attr-picture-crossorigin"><code>crossorigin</code></dfn> attribute is a
@@ -855,6 +887,21 @@ HTMLPictureElement : HTMLImageElement{
         <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a>
         the <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> content attribute.
       </p>
+
+      <dl class="domintro">
+        <dt>
+          <var><a href="#dfn-picture">picture</a></var> . <code title="dom-picture-load"><a href="#dom-picture-load">load()</a></code>
+        </dt>
+        <dd>
+          <p>Causes the element to reset and start selecting and loading a new <a href="#image-resource">image resource</a> from scratch.</p>
+        </dd>
+      </dl>
+      <div class="impl">
+        <p>
+          When the <dfn id="dom-picture-load" title="dom-picture-load"><code>load()</code></dfn> method on a <code><a href="#dfn-picture">picture</a></code> element is invoked, the user agent must run the load algorithm.
+        </p>
+      </div>
+
     </div>
     <h2 id="algorithm-for-deriving-the-source-image"><span class="secno">5 </span>
       Algorithm for deriving the source image

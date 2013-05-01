@@ -874,11 +874,14 @@ HTMLPictureElement : HTMLImageElement{
 "dom-picture-crossOrigin">crossOrigin</a>;
    attribute DOMString <a href="#dom-picture-srcset" title=
 "dom-picture-srcset">srcset</a>;
+   readonly attribute DOMString <span title=
+"dom-picture-currentsrc">currentSrc</span>;
    attribute DOMString <a href="#dom-picture-usemap" title=
 "dom-picture-useMap">useMap</a>;
    attribute boolean <a href="#dom-picture-ismap" title=
 "dom-picture-isMap">isMap</a>;
    readonly attribute DOMString media;
+   void <span title="dom-picture-load">load</span>();
 }
 </pre>
       </dd>
@@ -910,8 +913,8 @@ HTMLPictureElement : HTMLImageElement{
       present must contain a <a href=
       "http://www.w3.org/TR/html5/infrastructure.html#valid-non-empty-url-potentially-surrounded-by-spaces">
       valid non-empty URL potentially surrounded by spaces</a> referencing a
-      non-interactive, optionally animated, image resource that is neither
-      paged nor scripted.
+      non-interactive, optionally animated, <dfn>image resource</dfn> that is
+      neither paged nor scripted.
     </p>
     <p class="note">
       The requirements above imply that images can be static bitmaps (e.g.
@@ -936,6 +939,37 @@ HTMLPictureElement : HTMLImageElement{
       "#attr-picture-srcset">srcset</a></code> attribute may be present, and if
       present must conform to <a href="http://dev.w3.org/html5/srcset/">the
       <code>srcset</code> specification</a>.
+    </p>
+    <dl class="domintro">
+      <dt>
+        <var>picture</var> . <code>currentSrc</code>
+      </dt>
+      <dd>
+        <p>
+          Returns the address of the current <span>image resource</span>.
+        </p>
+        <p>
+          Returns the empty string when there is no <span>image
+          resource</span>.
+        </p>
+      </dd>
+    </dl>
+    <div class="impl">
+      <p>
+        The <dfn title="dom-picture-currentSrc"><code>currentSrc</code></dfn>
+        IDL attribute is initially the empty string. Its value is changed by
+        the <span title="dfn-algorithm-for-deriving-the-source-image">resource
+        selection algorithm</span> defined below.
+      </p>
+    </div>
+    <p class="note">
+      There are three ways to specify an <span>image resource</span>, the
+      <code title="attr-picture-src">src</code> attribute, the <code title=
+      "attr-picture-srcset">srcset</code> attribute, or <code>source</code>
+      elements. The <code title="attr-picture-srcset">srcset</code> attribute
+      overrides both the <code title="attr-picture-src">src</code> attribute
+      and the elements; the <code title="attr-picture-src">src</code> attribute
+      overrides the elements.
     </p>
     <p>
       The <dfn id="attr-picture-crossorigin" title=
@@ -1059,6 +1093,24 @@ HTMLPictureElement : HTMLImageElement{
         the <code title="attr-picture-ismap"><a href=
         "#attr-picture-ismap">ismap</a></code> content attribute.
       </p>
+      <dl class="domintro">
+        <dt>
+          <var>picture</var> . <code title="dom-picture-load">load()</code>
+        </dt>
+        <dd>
+          <p>
+            Causes the element to reset and start selecting and loading a new
+            <span>image resource</span> from scratch.
+          </p>
+        </dd>
+      </dl>
+      <div class="impl">
+        <p>
+          When the <dfn title="dom-picture-load"><code>load()</code></dfn>
+          method on a <code>picture</code> element is invoked, the user agent
+          must run the load algorithm.
+        </p>
+      </div>
     </div>
     <h2>
       Algorithm for deriving the source image
