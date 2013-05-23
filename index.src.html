@@ -997,6 +997,34 @@ HTMLPictureElement : HTMLImageElement{
       The <span>chosen image</span> is the embedded content.
     </p>
     <p>
+      In the absence of style rules to the contrary, the chosen <span>image
+      resource</span> should be rendered centered within the element's area at
+      the largest possible size that fits completely within the element's area,
+      with the chosen <span>image resource</span>'s intrinsic aspect ratio
+      being preserved. Thus, if the aspect ratio of the <code>picture</code>
+      element's area does not match the aspect ratio of the <span>image
+      resource</span>, the <span>image resource</span> will be shown
+      letterboxed or pillarboxed. Areas of the element's area that do not
+      contain the <span>image resource</span> represent nothing.
+    </p>
+    <div class="note">
+      <div class="note-title">
+        <span>Note</span>
+      </div>
+      <div class="">
+        <p>
+          In user agents that implement CSS, the above requirement can be
+          implemented by using the following style rules:
+        </p>
+        <pre>
+picture {
+   object-fit: contain;
+   object-position: center;
+}
+</pre>
+      </div>
+    </div>
+    <p>
       For user agents that don't support the <code>picture</code> element, an
       author can provide an <code>img</code> element as <span>fallback
       content</span>. User agents that support the <code>picture</code> element
