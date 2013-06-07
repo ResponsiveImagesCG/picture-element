@@ -1147,846 +1147,427 @@ picture {
           reflects the <code>picture</code> element’s <code title=
           "attr-picture-currentsrc">currentSrc</code> IDL attribute.
         </p>
-        <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
         <p>
-          A <code>picture</code> is always in one of the following states:
-        </p>
-        <dl>
-          <dt>
-            <dfn title="picture-none">Unavailable</dfn>
-          </dt>
-          <dd>
-            The user agent hasn’t obtained any image data.
-          </dd>
-          <dt>
-            <dfn title="picture-inc">Partially available</dfn>
-          </dt>
-          <dd>
-            The user agent has obtained some of the image data.
-          </dd>
-          <dt>
-            <dfn title="picture-all">Completely available</dfn>
-          </dt>
-          <dd>
-            The user agent has obtained all of the image data and at least the
-            image dimensions are available.
-          </dd>
-          <dt title="picture-error">
-            <dfn>Broken</dfn>
-          </dt>
-          <dd>
-            The user agent has obtained all of the image data that it can, but
-            it cannot even decode the image enough to get the image dimensions
-            (e.g. the image is corrupted, or the format is not supported, or no
-            data could be obtained).
-          </dd>
-        </dl>
-        <p>
-          When a <code>picture</code> element is either in the <span title=
-          "picture-inc">partially available</span> state or in the <span title=
-          "picture-all">completely available</span> state, it is said to be
-          <dfn title="picture-available">available</dfn>.
+          A <code>picture</code> element is always in one of the following
+          states, as defined in <code><a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>: <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#img-none"><dfn>unavailable</dfn></a>,
+          <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#img-inc"><dfn>partially
+          available</dfn></a>, <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#img-all"><dfn>completely
+          available</dfn></a>, <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#img-error"><dfn>broken</dfn></a>
+          (all instances of “<code>img</code>” should be read as
+          “<code>picture</code>”).
         </p>
         <p>
-          A <code>picture</code> element is initially <span title=
-          "picture-none">unavailable</span>.
+          A <code>picture</code> element’s <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#last-selected-source">
+          <dfn>last selected source</dfn></a> and <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#current-pixel-density">
+          <dfn>current pixel density</dfn></a>, and a <code><a href=
+          "http://www.w3.org/TR/html51/dom.html#document">Document</a></code>’s
+          <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#list-of-available-images">
+          <dfn>list of available images</dfn></a> are as defined in
+          <code><a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code> (all instances of “<code>img</code>” should be read as
+          “<code>picture</code>”).
         </p>
         <p>
-          When a <code>picture</code> element is <span title=
-          "picture-available">available</span>, it provides a <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#provides-a-paint-source">
-          paint source</a> whose width is the image’s intrinsic width, whose
-          height is the image’s intrinsic height, and whose appearance is the
-          intrinsic appearance of the image.
-        </p>
-        <p>
-          Each <code>picture</code> element has a <dfn>last selected
-          source</dfn>, which must initially be null, and a <dfn>current pixel
-          density</dfn>, which must initially be undefined.
-        </p>
-        <p>
-          When a <code>picture</code> element has a <span>current pixel
-          density</span> that is not 1.0, the element’s image data must be
-          treated as if its resolution, in device pixels per CSS pixels, was
-          the <span>current pixel density</span>.
-        </p>
-        <p class="example">
-          For example, if the <span>current pixel density</span> is 3.125, that
-          means that there are 300 device pixels per CSS inch, and thus if the
-          image data is 300x600, it has an intrinsic dimension of 96 CSS pixels
-          by 192 CSS pixels.
-        </p>
-        <p>
-          Each <code><a href=
-          "http://www.w3.org/TR/html51/dom.html#document">Document</a></code>
-          object must have a <dfn>list of available images</dfn>. Each image in
-          this list is identified by a tuple consisting of an <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
-          URL</a>, a <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#cors-settings-attribute">
-          CORS settings attribute</a> mode, and, if the mode is not <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#attr-crossorigin-none">
-          No CORS</a>, an <a href=
-          "http://www.w3.org/TR/html51/browsers.html#origin-0">origin</a>. User
-          agents may copy entries from one <code><a href=
-          "http://www.w3.org/TR/html51/dom.html#document">Document</a></code>
-          object’s list of available images to another at any time (e.g. when
-          the <code><a href=
-          "http://www.w3.org/TR/html51/dom.html#document">Document</a></code>
-          is created, user agents can add to it all the images that are loaded
-          in other <code><a href=
-          "http://www.w3.org/TR/html51/dom.html#document">Document</a></code>s),
-          but must not change the keys of entries copied in this way when doing
-          so. User agents may also remove images from such lists at any time
-          (e.g. to save memory).
-        </p>
-        <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-        <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-        <p>
-          Each <code>picture</code> element has a <dfn>delaying-the-load-event
-          flag</dfn>, which must begin in the false state. While the
-          <span>delaying-the-load-event flag</span> is true, the element must
-          delay the load event of its document.
+          A <code>picture</code> element’s <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#delaying-the-load-event-flag">
+          <dfn>delaying-the-load-event flag</dfn></a> is as defined in <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+          Elements</a> (all instances of “media element” should be read as
+          “<code>picture</code>”).
         </p>
         <hr>
         <p>
-          Images are obtained and updated by running the <span>picture load
-          algorithm</span>.
-        </p>
-        <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-        <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-        <p>
-          In a <a href=
-          "http://www.w3.org/TR/html51/browsers.html#browsing-context">browsing
-          context</a> where <a href=
-          "http://www.w3.org/TR/html51/webappapis.html#concept-bc-noscript">scripting
-          is disabled</a>, user agents may obtain images immediately or on
-          demand. In a <a href=
-          "http://www.w3.org/TR/html51/browsers.html#browsing-context">browsing
-          context</a> where <a href=
-          "http://www.w3.org/TR/html51/webappapis.html#concept-bc-noscript">scripting
-          is enabled</a>, user agents must obtain images immediately.
+          Image data for a <code>picture</code> element is obtained or updated
+          by running the <span>picture load algorithm</span> with the
+          <code>picture</code> element as input.
         </p>
         <p>
-          A user agent that obtains images immediately must synchronously
-          <span title="picture-load-algorithm">update the image data</span> of
-          a <code>picture</code> element whenever that element is created with
-          a <code title="attr-picture-src">src</code> or <code title=
-          "attr-picture-srcset">srcset</code> attribute. A user agent that
-          obtains images immediately must also synchronously <span title=
-          "picture-load-algorithm">update the image data</span> of a
-          <code>picture</code> element whenever that element has its
-          <code>src</code>, <code>srcset</code>, <code title=
-          "attr-picture-crossorigin">crossorigin</code> attribute set, changed,
-          or removed.
-        </p><!-- Note how this does NOT happen when the base URL changes. -->
-        <p>
-          A user agent that obtains images on demand must <span title=
-          "picture-load-algorithm">update the image data</span> of a
-          <code>picture</code> element whenever it needs the image data (i.e.
-          on demand), but only if the <code>picture</code> element has a
-          <code title="attr-picture-src">src</code> or <code title=
-          "attr-picture-srcset">srcset</code> attribute, and only if the
-          <code>picture</code> element is in the <span title=
-          "picture-none">unavailable</span> state. When a <code>picture</code>
-          element’s <code title="attr-picture-src">src</code>, <code title=
-          "attr-picture-srcset">srcset</code>, or <code title=
-          "attr-picture-crossorigin">crossorigin</code> attribute is set,
-          changed, or removed, if the user agent only obtains images on demand,
-          the <code>picture</code> element must return to the <span title=
-          "picture-none">unavailable</span> state.
-        </p><!-- Note how this does NOT happen when the base URL changes. -->
-        <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-        <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-        <p>
-          When the <dfn title="dom-picture-load"><code>load()</code></dfn>
-          method on a <code>picture</code> element is invoked, the user agent
-          must run the <span>picture load algorithm</span>.
+          The timing of how image data is obtained–specifically if and when
+          image data is loaded on demand , if and when image data is loaded
+          immediately, and if and when and image is loaded synchronously or
+          asynchronously–is defined as in <code><a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>(all instances of “<code>img</code>” should be read as
+          “<code>picture</code>” and all instances of “<code title=
+          "attr-picture-src">src</code>” should be read as “<code title=
+          "attr-picture-src">src</code> or <code title=
+          "attr-picture-srcset">srcset</code>”).
         </p>
-        <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
+        <p>
+          Invoking a <code>picture</code> element’s <dfn title=
+          "dom-picture-load"><code>load()</code></dfn> function must trigger
+          the <span>picture load algorithm</span>.
+        </p>
         <p>
           A user agent may override requests for higher-resolution images based
           on user preferences. For example: “always request high-resolution
-          images,” “always request low-resolution images,” and “request
+          images”, “always request low-resolution images”, and “request
           high-resolution images as bandwidth permits” based on the bandwidth
           information available to the browser.
         </p>
       </div>
-      <hr>
       <h3>
         Picture load algorithm
       </h3>
-      <div>
-        <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-        <p>
-          The <dfn>picture load algorithm</dfn> must be run when the user agent
-          is to obtain the image data of a <code>picture</code> element. The
-          user agent may at any time run the following algorithm to update a
-          <code>picture</code> element’s image in order to react to changes in
-          the environment. The picture load algorithm consists of the following
-          steps:
-        </p>
-        <ol>
-          <li>
-            <p>
-              Return the <code>picture</code> element to the <span title=
-              "picture-none">unavailable</span> state.
-            </p>
-          </li>
-          <li>
-            <p>
-              If an instance of the <span>resource fetching algorithm</span> is
-              still running for this element, then abort that algorithm,
-              discarding any pending <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">tasks</a>
-              generated by that algorithm.
-            </p>
-            <p>
-              If an instance of the <span>resource selection algorithm</span>
-              is still running for this element, then abort that algorithm,
-              discarding any pending <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">tasks</a>
-              generated by that algorithm.
-            </p>
-            <p>
-              If an instance of the <span>source selection algorithm</span> is
-              still running for this element, then abort that algorithm,
-              discarding any pending <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">tasks</a>
-              generated by that algorithm.
-            </p>
-            <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-            <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-            <p class="note">
-              Basically, pending events and callbacks for the
-              <code>picture</code> element are discarded when the
-              <code>picture</code> element starts loading a new resource.
-            </p>
-          </li>
-          <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-          <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <li>
-            <p>
-              Forget the <code>picture</code> element’s current image data, if
-              any.
-            </p>
-          </li>
-          <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-          <li>
-            <p>
-              <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">Queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code>emptied</code> at the
-              <code>picture</code> element.
-            </p>
-          </li>
-          <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-          <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <li>
-            <p>
-              If the user agent cannot support images, or its support for
-              images has been disabled, then abort these steps.
-            </p>
-          </li>
-          <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <li>
-            <p>
-              Invoke the <code>picture</code> element’s <span>source selection
-              algorithm</span>.
-            </p>
-          </li>
-        </ol>
-        <div class="note">
+      <p>
+        The <dfn>picture load algorithm</dfn> must be run when the user agent
+        is to obtain the image data of a <code>picture</code> element. The user
+        agent may at any time run the following algorithm to update a
+        <code>picture</code> element’s image in order to react to changes in
+        the environment. The picture load algorithm consists of the following
+        steps:
+      </p>
+      <p>
+        This algorithm combines portions of <code><a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">img</a></code>’s
+        <a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+        update the image data</a> algorithm and <a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+        Elements</a>’ <a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
+        media element load algorithm</a>, as follows:
+      </p>
+      <ol>
+        <li>
           <p>
-            <em>This note is non-normative.</em>
+            Perform steps 1–3 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
           </p>
-          <p>
-            What we want to do is have the <code>picture</code> behave exactly
-            the same as an <code>img</code> element, but with the only
-            difference being that it is <code>source</code> elements are used
-            to determine the value of the <code title=
-            "attr-picture-src">src</code> or <code title=
-            "attr-picture-srcset">srcset</code> IDL attributes (and hence what
-            image content is displayed). How that is determined is through
-            using the <code title="attr-source-media">media</code> and
-            <code title="attr-source-type">type</code> attributes of the
-            <code>source</code> element.
-          </p>
-          <p>
-            So, to derive the source image: ignoring any sources whose
-            <code title="attr-source-type">type</code> is not supported by the
-            browser, gather all the media queries from the <code>source</code>
-            elements’ <code title="attr-source-media">media</code> attributes
-            into a “stylesheet”, in document order. Any missing <code title=
-            "attr-source-media">media</code> attributes are just assumed to
-            mean “all”. Any media attributes that are not valid media queries
-            are ignored.
-          </p>
-          <p>
-            The API then just works the same as per images. Events are fired in
-            the same way as if the image’s src IDL attribute had been set
-            manually by the author.
-          </p>
-          <p>
-            The resource fetching behavior of then governed by <cite>CSS Image
-            Values and Replaced Content Module Level 4</cite>.
-          </p>
-        </div>
-      </div>
-      <hr>
-      <h3>
-        Source selection algorithm
-      </h3>
-      <div>
-        <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-        <p>
-          The <dfn>source selection algorithm</dfn> for a <code>picture</code>
-          element is as follows. This algorithm is always invoked
-          synchronously, but one of the first steps in the algorithm is to
-          return and continue running the remaining steps asynchronously,
-          meaning that it runs in the background with scripts and other
-          <a href="http://www.w3.org/TR/html51/webappapis.html#concept-task">tasks</a>
-          running in parallel. In addition, this algorithm interacts closely
-          with the <a href=
-          "http://www.w3.org/TR/html51/webappapis.html#event-loop">event
-          loop</a> mechanism; in particular, it has <a href=
-          "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">synchronous
-          sections</a> (which are triggered as part of the <a href=
-          "http://www.w3.org/TR/html51/webappapis.html#event-loop">event
-          loop</a> algorithm). Steps in such sections are marked with †.
-        </p>
-        <ol>
-          <li>
-            <p>
-              Set the <code>picture</code> element’s
-              <span>delaying-the-load-event flag</span> to true (this <a href=
-              "http://www.w3.org/TR/html51/syntax.html#delay-the-load-event">delays
-              the load event</a>).
-            </p>
-          </li>
-          <li>
-            <p>
-              Asynchronously <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#await-a-stable-state">
-              await a stable state</a>, allowing the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">task</a>
-              that invoked this algorithm to continue. The <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-              synchronous section</a> consists of all the remaining steps of
-              this algorithm until the algorithm says the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-              synchronous section</a> has ended. (Steps in <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-              synchronous sections</a> are marked with †.)
-            </p>
-          </li>
-          <li>
-            <p>
-              † If the <code>picture</code> element has a <code title=
-              "attr-picture-src">src</code> or <code title=
-              "attr-picture-srcset">srcset</code> attribute, then let
-              <var>mode</var> be <i>attribute</i>.
-            </p>
-            <p>
-              † Otherwise, if the <code>picture</code> element does not have a
-              <code title="attr-picture-src">src</code> or <code title=
-              "attr-picture-srcset">srcset</code>attribute but has a
-              <code>source</code> element child, then let <var>mode</var> be
-              <i>source</i> and let <var>candidate</var> be the first such
-              <code>source</code> element child in <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#tree-order">tree
-              order</a>.
-            </p>
-            <p>
-              † Otherwise the picture element has neither <code title=
-              "attr-picture-src">src</code> nor <code title=
-              "attr-picture-srcset">srcset</code> attributes nor a
-              <code>source</code> element child: set the element to the
-              <span title="picture-error">broken</span> state, <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple</a> event named <code title=
-              "event-error">error</code> at the <code>picture</code> element,
-              set the element’s <span>delaying-the-load-event flag</span> to
-              false, and abort these steps. The <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-              synchronous section</a> ends.
-            </p>
-          </li>
-          <li>
-            <p>
-              † <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">Queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-loadstart">loadstart</code> at the <code>picture</code>
-              element.
-            </p>
-          </li>
-          <li>
-            <p>
-              If <var>mode</var> is <i>attribute</i>, then run these substeps:
-            </p>
-            <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-            <!-- BEGIN SOURCE: SRCSET SPEC (http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/) -->
-            <ol>
-              <li>
-                <p>
-                  If the element has a <code title=
-                  "attr-picture-srcset">srcset</code> attribute specified and
-                  its value is not the empty string, then let the
-                  <code>picture</code> element be the input to the
-                  <span>resource selection algorithm</span>, and let the
-                  <var>selected source</var> and <var>selected pixel
-                  density</var> be the URL and pixel density that results from
-                  the that algorithm, respectively.
-                </p>
-                <p>
-                  Otherwise, if the element has a <code title=
-                  "attr-picture-src">src</code> attribute specified and its
-                  value is not the empty string, let <var>selected source</var>
-                  be the value of the element’s <code title=
-                  "attr-picture-src">src</code> attribute, and <var>selected
-                  pixel density</var> be 1.0.
-                </p>
-                <p>
-                  Otherwise, let <var>selected source</var> be null and
-                  <var>selected pixel density</var> be undefined.
-                </p>
-              </li>
-            </ol>
-            <!-- END SOURCE: SRCSET SPEC (http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/) -->
-            <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-            <p>
-              Otherwise, the <code>source</code> elements will be used; run
-              these substeps:
-            </p>
-            <ol>
-              <li>
-                <p>
-                  Let <var>pointer</var> be a position defined by two adjacent
-                  nodes in the <code>picture</code> element’s child list,
-                  treating the start of the list (before the first child in the
-                  list, if any) and end of the list (after the last child in
-                  the list, if any) as nodes in their own right. One node is
-                  the node before <var>pointer</var>, and the other node is the
-                  node after <var>pointer</var>. Initially, let
-                  <var>pointer</var> be the position between the
-                  <var>candidate</var> node and the next node, if there are
-                  any, or the end of the list, if it is the last node.
-                </p>
-                <p>
-                  As nodes are inserted and removed into the
-                  <code>picture</code> element, <var>pointer</var> must be
-                  updated as follows:
-                </p>
-                <dl>
-                  <dt>
-                    If a new node is inserted between the two nodes that define
-                    <var>pointer</var>
-                  </dt>
-                  <dd>
-                    Let <var>pointer</var> be the point between the node before
-                    <var>pointer</var> and the new node. In other words,
-                    insertions at <var>pointer</var> go after
-                    <var>pointer</var>.
-                  </dd>
-                  <dt>
-                    If the node before <var>pointer</var> is removed
-                  </dt>
-                  <dd>
-                    Let <var>pointer</var> be the point between the node after
-                    <var>pointer</var> and the node before the node after
-                    <var>pointer</var>. In other words, <var>pointer</var>
-                    doesn’t move relative to the remaining nodes.
-                  </dd>
-                  <dt>
-                    If the node after <var>pointer</var> is removed
-                  </dt>
-                  <dd>
-                    Let <var>pointer</var> be the point between the node before
-                    <var>pointer</var> and the node after the node before
-                    <var>pointer</var>. Just as with the previous case,
-                    <var>pointer</var> doesn’t move relative to the remaining
-                    nodes.
-                  </dd>
-                </dl>
-                <p>
-                  Other changes don’t affect <var>pointer</var>.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <i>process candidate</i>: If <var>candidate</var> has neither
-                  a <code title="attr-source-src">src</code> attribute nor a
-                  <code title="attr-source-srcset">srcset</code> attribute, or
-                  if it has only a <code title="attr-source-src">src</code>
-                  attribute or a <code title="attr-source-srcset">srcset</code>
-                  attribute and this attribute’s value is the empty string, or
-                  if it has both a <code title="attr-source-src">src</code> and
-                  a <code title="attr-source-srcset">srcset</code> attribute
-                  and the value of both is the the empty string, then end the
-                  <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous section</a>, and jump down to the <i>failed</i>
-                  step below.
-                </p>
-              </li>
-              <li>
-                <p>
-                  If <var>candidate</var> has a <code title=
-                  "attr-source-type">type</code> attribute whose value, when
-                  parsed as a <a href=
-                  "http://www.w3.org/TR/html51/infrastructure.html#mime-type">MIME
-                  type</a> (including any codecs described by the
-                  <code>codecs</code> parameter, for types that define that
-                  parameter), represents <a href=
-                  "http://www.w3.org/TR/html51/embedded-content-0.html#a-type-that-the-user-agent-knows-it-cannot-render">
-                  a type that the user agent knows it cannot render</a>, then
-                  end the <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous section</a>, and jump down to the <i>failed</i>
-                  step below.
-                </p>
-              </li>
-              <li>
-                <p>
-                  If <var>candidate</var> has a <code title=
-                  "attr-source-media">media</code> attribute whose value does
-                  not <a href=
-                  "http://www.w3.org/TR/html51/infrastructure.html#matches-the-environment">
-                  match the environment</a>, then end the <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous section</a>, and jump down to the <i>failed</i>
-                  step below.
-                </p>
-              </li>
-              <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-              <!-- BEGIN SOURCE: SRCSET SPEC (http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/) -->
-              <li>
-                <p>
-                  If the element has a <code title=
-                  "attr-source-srcset">srcset</code> attribute specified and
-                  its value is not the empty string, then let the
-                  <code>source</code> element be the input to the
-                  <span>resource selection algorithm</span>, and let the
-                  <var>selected source</var> and <var>selected pixel
-                  density</var> be the URL and pixel density that results from
-                  the that algorithm, respectively.
-                </p>
-                <p>
-                  Otherwise, if the element has a <code title=
-                  "attr-source-src">src</code> attribute specified and its
-                  value is not the empty string, let <var>selected source</var>
-                  be the value of the element’s <code title=
-                  "attr-source-src">src</code> attribute, and <var>selected
-                  pixel density</var> be 1.0. Otherwise, let <var>selected
-                  source</var> be null and <var>selected pixel density</var> be
-                  undefined.
-                </p>
-              </li>
-              <!-- END SOURCE: SRCSET SPEC (http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/) -->
-              <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-              <li>
-                <p>
-                  <i>failed</i>: <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">Queue
-                  a task</a>, using the <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#dom-manipulation-task-source">
-                  DOM manipulation task source</a>, to <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                  fire a simple event</a> named <code>error</code> at the
-                  <var>candidate</var> element, in the context of the <a href=
-                  "http://www.w3.org/TR/html51/infrastructure.html#fetch">fetching
-                  process</a> that was used to try to obtain
-                  <var>candidate</var>’s corresponding <span>image
-                  resource</span> in the <span>resource fetching
-                  algorithm</span>.
-                </p>
-              </li>
-              <li>
-                <p>
-                  Asynchronously <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#await-a-stable-state">
-                  await a stable state</a>. The <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous section</a> consists of all the remaining steps
-                  of this algorithm until the algorithm says the synchronous
-                  section has ended. (Steps in <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous sections</a> are marked with †.)
-                </p>
-              </li>
-              <li>
-                <p>
-                  Find next candidate: Let <var>candidate</var> be null.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <i>Search loop</i>: If the node after <var>pointer</var> is
-                  the end of the list, then jump to the <i>waiting</i> step
-                  below.
-                </p>
-              </li>
-              <li>
-                <p>
-                  If the node after <var>pointer</var> is a <code>source</code>
-                  element, let <var>candidate</var> be that element.
-                </p>
-              </li>
-              <li>
-                <p>
-                  Advance <var>pointer</var> so that the node before
-                  <var>pointer</var> is now the node that was after
-                  <var>pointer</var>, and the node after <var>pointer</var> is
-                  the node after the node that used to be after
-                  <var>pointer</var>, if any.
-                </p>
-              </li>
-              <li>
-                <p>
-                  If <var>candidate</var> is null, jump back to the <i>search
-                  loop</i> step. Otherwise, jump back to the <i>process
-                  candidate</i> step.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <i>Waiting</i>: Set the element’s
-                  <span>delaying-the-load-event flag to false</span>. This
-                  stops <a href=
-                  "http://www.w3.org/TR/html51/syntax.html#delay-the-load-event">
-                  delaying the load event</a>.
-                </p>
-              </li>
-              <li>
-                <p>
-                  End the <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous section</a>, continuing the remaining steps
-                  asynchronously.
-                </p>
-              </li>
-              <li>
-                <p>
-                  Wait until the node after <var>pointer</var> is a node other
-                  than the end of the list. (This step might wait forever.)
-                </p>
-              </li>
-              <li>
-                <p>
-                  Asynchronously <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#await-a-stable-state">
-                  await a stable state</a>. The <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous section</a> consists of all the remaining steps
-                  of this algorithm until the algorithm says the <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous section</a> has ended. (Steps in <a href=
-                  "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-                  synchronous sections</a> are marked with †.)
-                </p>
-              </li>
-              <li>
-                <p>
-                  † Set the element’s <span>delaying-the-load-event flag</span>
-                  back to true (this <a href=
-                  "http://www.w3.org/TR/html51/syntax.html#delay-the-load-event">
-                  delays the load event</a> again, in case it hasn’t been fired
-                  yet).
-                </p>
-              </li>
-              <li>
-                <p>
-                  † Jump back to the <i>Find next candidate</i> step above.
-                </p>
-              </li>
-            </ol>
-          </li>
-          <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-          <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <li>
-            <p>
-              Let the <code>picture</code> element’s <span>last selected
-              source</span> be <var>selected source</var> and the
-              <code>picture</code> element’s <span>current pixel density</span>
-              be <var>selected pixel density</var>.
-            </p>
-          </li>
-          <li>
-            <p>
-              <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#resolve-a-url">Resolve</a>
-              <var>selected source</var>, relative to the element. If that is
-              not successful, set the <code>picture</code> element to the
-              <span title="picture-error">broken state</span>, <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-error">error</code> at the <code>picture</code> element,
-              set the element’s <span>delaying-the-load-event flag to
-              false</span>, and abort these steps.
-            </p>
-          </li>
-          <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-          <li>
-            <p>
-              Let <var>absolute URL</var> be the resulting <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
-              URL</a>.
-            </p>
-          </li>
-          <li>
-            <p>
-              Set the <code>picture</code> element’s <code title=
-              "attr-picture-currentsrc">currentSrc</code> IDL attribute to
-              <var>absolute URL</var>.
-            </p>
-          </li>
-          <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-          <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <li>
-            <p>
-              Let <var>key</var> be a tuple consisting of <var>absolute
-              URL</var>, the <code>picture</code> element’s <code title=
-              "attr-picture-crossorigin">crossorigin</code> attribute’s mode,
-              and, if that mode is not <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#attr-crossorigin-none">
-              No CORS</a>, the <code>Document</code> object’s <a href=
-              "http://www.w3.org/TR/html51/browsers.html#origin-0">origin</a>.
-            </p>
-          </li>
-          <li>
-            <p>
-              If the <a href=
-              "http://www.w3.org/TR/html51/embedded-content-0.html#list-of-available-images">
-              list of available images</a>, contains an entry for
-              <var>key</var>, then set the <code>picture</code> element to the
-              <span title="picture-all">completely available</span> state,
-              update the presentation of the image appropriately, <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-load">load</code> at the <code>picture</code> element, and
-              abort these steps.
-            </p>
-          </li>
-          <li>
-            <p>
-              Asynchronously <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#await-a-stable-state">
-              await a stable state</a>, allowing the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">task</a>
-              that invoked this algorithm to continue. The <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-              synchronous section</a> consists of all the remaining steps of
-              this algorithm until the algorithm says the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-              synchronous section</a> has ended. (Steps in <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">
-              synchronous sections</a> are marked with †.)
-            </p>
-          </li>
-          <li>
-            <p>
-              † If another instance of this algorithm for this
-              <code>picture</code> element was started after this instance
-              (even if it aborted and is no longer running), then abort these
-              steps.
-            </p>
-            <p class="note">
-              Only the last instance takes effect, to avoid multiple requests
-              when, for example, the <code title="attr-picture-src">src</code>,
-              <code title="attr-picture-srcset">srcset</code>, and <code title=
-              "attr-picture-crossorigin">crossorigin</code> attributes are all
-              set in succession.
-            </p>
-          </li>
-          <li>
-            <p>
-              † If <var>selected source</var> is null, then set the element to
-              the <span title="picture-broken">broken state</span>, <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-error">error</code> at the <code>picture</code> element,
-              set the element’s <span>delaying-the-load-event flag to
-              false</span>, and abort these steps.
-            </p>
-          </li>
-          <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-          <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-          <li>
-            <p>
-              Run the <span>resource fetching algorithm</span> with
-              <var>absolute URL</var>.
-            </p>
-            <p>
-              If that algorithm returns without aborting <em>this</em> one,
-              then the load failed. Set the <code>picture</code> element to the
-              <span title="picture-error">broken state</span>, <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-error">error</code> at the <code>picture</code> element,
-              set the element’s <span>delaying-the-load-event flag to
-              false</span>, and abort these steps.
-            </p>
-          </li>
-          <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-        </ol>
-      </div>
-      <hr>
-      <h3>
-        Resource selection algorithm
-      </h3>
-      <div>
-        <p>
-          When the user agent is required to <dfn title=
-          "resource selection algorithm">select an image resource</dfn> for a
-          <code>picture</code> or <code>source</code> element’s <code title=
-          "attr-picture-src">src</code> or <code title=
-          "attr-picture-srcset">srcset</code> attribute, the user agent must
-          run the following algorithm:
-        </p>
-        <ol>
-          <li>Let <var>input</var> be the element that was input to this
-          algorithm
-          </li>
-          <li>Let <var>output</var> be the results of running the <a href=
-          "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/processing-the-image-candidates">
-            process the image candidates algorithm from the srcset
-            specification</a>, with <var>input</var> replacing any instance of
-            <code>img</code> in that algorithm.
-            <div class="note">
+          <ul>
+            <li>
               <p>
-                In that algorithm:
+                All instances of “<code>img</code>” should be read as
+                “<code>picture</code>”.
               </p>
-              <ul>
-                <li>ignore image candidate string components #4–6
-                </li>
-                <li>ignore the first two cases in <i>Processing the image
-                candidates</i> step 6
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li>Return <var>output</var> to the task that launched this algorithm
-          </li>
-        </ol>
+            </li>
+            <li>
+              <p>
+                All instances of “<code title="attr-picture-src">src</code>”
+                should be read as “<code title="attr-picture-src">src</code> or
+                <code title="attr-picture-srcset">srcset</code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “fetching algorithm” should be read as
+                “<span>resource selection algorithm</span> or <span>resource
+                fetching algorithm</span>”.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform step 4, substep 1 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
+            media element load algorithm</a>.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “media element” should be read as
+                “<code>picture</code> element”.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform step 4 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
+          </p>
+        </li>
+        <li>
+          <p>
+            Run the <span>resource selection algorithm</span> with the
+            <code>picture</code> element as input.
+          </p>
+        </li>
+      </ol>
+      <div class="note">
+        <p>
+          <em>This note is non-normative.</em>
+        </p>
+        <p>
+          What we want to do is have the <code>picture</code> behave exactly
+          the same as an <code>img</code> element, but with the only difference
+          being that it is <code>source</code> elements are used to determine
+          the value of the <code title="attr-picture-src">src</code> or
+          <code title="attr-picture-srcset">srcset</code> IDL attributes (and
+          hence what image content is displayed). How that is determined is
+          through using the <code title="attr-source-media">media</code> and
+          <code title="attr-source-type">type</code> attributes of the
+          <code>source</code> element.
+        </p>
+        <p>
+          So, to derive the source image: ignoring any sources whose
+          <code title="attr-source-type">type</code> is not supported by the
+          browser, gather all the media queries from the <code>source</code>
+          elements’ <code title="attr-source-media">media</code> attributes
+          into a “stylesheet”, in document order. Any missing <code title=
+          "attr-source-media">media</code> attributes are just assumed to mean
+          “all”. Any media attributes that are not valid media queries are
+          ignored.
+        </p>
+        <p>
+          The API then just works the same as per images. Events are fired in
+          the same way as if the image’s src IDL attribute had been set
+          manually by the author.
+        </p>
+        <p>
+          The resource fetching behavior of then governed by <cite>CSS Image
+          Values and Replaced Content Module Level 4</cite>.
+        </p>
       </div>
-      <hr>
+    </div>
+    <h3>
+      Resource selection algorithm
+    </h3>
+    <div>
+      <p>
+        The <dfn>resource selection algorithm</dfn> for a <code>picture</code>
+        element is always invoked synchronously, but one of the first steps in
+        the algorithm is to return and continue running the remaining steps
+        asynchronously. It has <a href=
+        "http://www.w3.org/TR/html51/webappapis.html#synchronous-section">synchronous
+        sections</a> (which are triggered as part of the <a href=
+        "http://www.w3.org/TR/html51/webappapis.html#event-loop">event loop</a>
+        algorithm).
+      </p>
+      <p>
+        This algorithm combines portions of <code><a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">img</a></code>’s
+        <a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+        update the image data</a> algorithm, <code><a href=
+        "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>’s
+        <a href=
+        "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
+        update the image data</a> algorithm, and <a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+        Elements</a>’ <a href=
+        "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+        resource selection algorithm</a>, as follows:
+      </p>
+      <ol>
+        <li>
+          <p>
+            Perform steps 3, 4, 6, and 8 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “media element” should be read as
+                “<code>picture</code> element”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “<code title="attr-picture-src">src</code>”
+                should be read as “<code title="attr-picture-src">src</code> or
+                <code title="attr-picture-srcset">srcset</code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                When that algorithm instructs a user agent to “set the
+                <code>networkState</code> to <code>NETWORK_EMPTY</code>”, the
+                user agent should instead set the <code>picture</code> element
+                to the <span title="picture-error">broken state</span> and
+                <a href=
+                "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
+                a task</a> to <a href=
+                "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
+                fire a simple event</a> named <code title=
+                "event-error">error</code> at the <code>picture</code> element,
+                and set the <code>picture</code> element’s
+                <span>delaying-the-load-event flag</span> to false.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            If <var>mode</var> is <i>attribute</i>, perform step 5 of the
+            <code><a href=
+            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>
+            <a href=
+            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
+            update the image data</a> algorithm, with the <code>picture</code>
+            element as the input.
+          </p>
+          <p>
+            Otherwise, <code>source</code> elements will be used; perform the
+            <code>source</code> element substeps 1, 2, 5, 6 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+          <ul>
+            <li>
+              <p>
+                The first instance of “<code title=
+                "attr-picture-src">src</code>” should be read as “<code title=
+                "attr-picture-src">src</code> or <code title=
+                "attr-picture-srcset">srcset</code>”; the second should be read
+                as “<code title="attr-picture-src">src</code> and <code title=
+                "attr-picture-srcset">srcset</code>”.
+              </p>
+            </li>
+          </ul>
+          <p>
+            Perform step 5 of the <code><a href=
+            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>
+            <a href=
+            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
+            update the image data</a> algorithm, with the <code>source</code>
+            element as the input.
+          </p>
+          <p>
+            Perform the <code>source</code> element substeps 10, 11, 13–17,
+            21–23, and 26 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+          <ul>
+            <li>
+              <p>
+                Ignore references to the <i>Waiting</i> step.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform steps 6 and 7 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “<code>img</code>” should be read as
+                “<code>picture</code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                If step 7’s <a href=
+                "http://www.w3.org/TR/html51/infrastructure.html#resolve-a-url">
+                resolve</a> is unsuccessful, set the <code>picture</code>
+                element to the <span title="picture-error">broken state</span>,
+                <a href=
+                "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
+                a task</a> to <a href=
+                "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
+                fire a simple event</a> named <code title=
+                "event-error">error</code> at the <code>picture</code> element,
+                set the <code>picture</code> element’s
+                <span>delaying-the-load-event flag</span> to false before
+                aborting.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Let <var>absolute URL</var> be the <a href=
+            "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
+            URL</a> of <var>selected source</var>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Perform <code>source</code> element substep 7 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+        </li>
+        <li>
+          <p>
+            Perform steps 8–12 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “the resulting <a href=
+                "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
+                URL</a>” should be read as “<var>absolute URL</var>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “<code>img</code>” should be read as
+                “<code>picture</code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “<code title="attr-picture-src">src</code>”
+                should be read as “<code title="attr-picture-src">src</code> or
+                <code title="attr-picture-srcset">srcset</code>”.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform <code>source</code> element substep 9 of the <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+          <ul>
+            <li>
+              <p>
+                The <span>resource fetch algorithm</span> that runs is
+                <code>picture</code>’s, not <a href=
+                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+                Media Elements</a>’.
+              </p>
+            </li>
+            <li>
+              <p>
+                If the load fails, set the <code>picture</code> element to the
+                <span title="img-error">broken</span> state, <a href=
+                "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
+                a task</a> to <a href=
+                "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
+                fire a simple event</a> named <code title=
+                "event-error">error</code> at the <code>picture</code> element,
+                set the <code>picture</code> element’s
+                <span>delaying-the-load-event flag</span> to false, and abort
+                these steps.
+              </p>
+            </li>
+          </ul>
+        </li>
+      </ol>
       <h3>
         Resource fetching algorithm
       </h3>
@@ -1995,382 +1576,79 @@ picture {
           The <dfn>resource fetching algorithm</dfn> for a <code>picture</code>
           element and a given <a href=
           "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
-          URL</a> is as follows:
+          URL</a> combines portions of <code><a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>’s <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+          update the image data</a> algorithm and <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+          Elements</a>’ <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
+          resource fetch algorithm</a>, as follows:
         </p>
         <ol>
-          <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
           <li>
             <p>
-              Do a <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#potentially-cors-enabled-fetch">
-              potentially CORS-enabled fetch</a> of the given <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
-              URL</a>, with the <i>mode</i> being the state of the element’s
-              <code title="attr-picture-crossorigin">crossorigin</code> content
-              attribute, the <i>origin</i> being the <a href=
-              "http://www.w3.org/TR/html51/browsers.html#origin-0">origin</a>
-              of the <code>picture</code> element’s <code>Document</code>, and
-              the <i>default origin behaviour</i> set to <i>taint</i>.
+              Perform step 14 of <code><a href=
+              "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+              img</a></code>’s <a href=
+              "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+              update the image data</a>.
             </p>
+            <ul>
+              <li>
+                <p>
+                  All instances of “<code>img</code>” should be read as
+                  “<code>picture</code>”.
+                </p>
+              </li>
+            </ul>
             <p>
-              The resource obtained in this fashion, if any, is the
-              <code>picture</code> element’s image data. It can be either
-              <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#cors-same-origin">
-              CORS-same-origin</a> or <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#cors-cross-origin">
-              CORS-cross-origin</a>; this affects the <a href=
-              "http://www.w3.org/TR/html51/browsers.html#origin-0">origin</a>
-              of the image itself (e.g. when used on a <code>canvas</code>).
-            </p>
-            <p>
-              Fetching the image must <a href=
-              "http://www.w3.org/TR/html51/syntax.html#delay-the-load-event">delay
-              the load event</a> of the element’s document until the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">task</a>
-              that is <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queued</a>
-              by the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#networking-task-source">
-              networking task source</a> once the resource has been <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#fetch">fetched</a>
-              (defined below) has been run.
-            </p>
-            <p class="warning">
-              This, unfortunately, can be used to perform a rudimentary port
-              scan of the user’s local network (especially in conjunction with
-              scripting, though scripting isn’t actually necessary to carry out
-              such an attack). User agents may implement <a href=
-              "http://www.w3.org/TR/html51/browsers.html#origin-0">cross-origin</a>
-              access control policies that are stricter than those described
-              above to mitigate this attack, but unfortunately such policies
-              are typically not compatible with existing Web content.
-            </p>
-            <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-            <!-- BEGIN SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-            <p>
-              Every 350ms (±200ms) or for every byte received, whichever is
-              <em>least</em> frequent, <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
+              During this step, <a href=
               "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
               fire a simple event</a> named <code title=
-              "event-progress">progress</code> at the element.
+              "event-progress">progress</code>, as defined in <a href=
+              "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+              Media Elements</a>’ <a href=
+              "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
+              resource fetch algorithm</a> step 4.
             </p>
             <p>
-              The <dfn>stall timeout</dfn> is a user-agent defined length of
-              time, which should be about three seconds. When a
-              <code>picture</code> element that is actively attempting to
-              obtain <span>image data</span> has failed to receive any data for
-              a duration equal to the <span>stall timeout</span>, the user
-              agent must <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-stalled">stalled</code> at the element.
+              The <dfn>stall timeout</dfn> is as defined in <a href=
+              "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+              Media Elements</a>’ <a href=
+              "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
+              resource fetch algorithm</a> step 4. User agents may block, slow,
+              or suspend downloads as defined in the same step. User agents may
+              use whatever means necessary to fetch the resource, as defined in
+              the same step.
             </p>
-            <p>
-              User agents may allow users to selectively block or slow
-              <span>image data</span> downloads. When a <code>picture</code>
-              element’s download has been blocked altogether, the user agent
-              must act as if it was stalled (as opposed to acting as if the
-              connection was closed). The rate of the download may also be
-              throttled automatically by the user agent, e.g. to balance the
-              download with other connections sharing the same bandwidth.
-            </p>
-            <p>
-              User agents may decide to not download more content at any time.
-              When a <code>picture</code> element’s download has been
-              suspended, the user agent must <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-suspend">suspend</code> at the element.
-            </p>
-            <p>
-              When a user agent decides to completely stall a download, the
-              element’s <span>delaying-the-load-event flag</span> must be set
-              to false. This stops <a href=
-              "http://www.w3.org/TR/html51/syntax.html#delay-the-load-event">delaying
-              the load event</a>.
-            </p>
-            <p>
-              The user agent may use whatever means necessary to fetch the
-              resource (within the constraints put forward by this and other
-              specifications); for example, reconnecting to the server in the
-              face of network errors, using HTTP range retrieval requests, or
-              switching to a streaming protocol. The user agent must consider a
-              resource erroneous only if it has given up trying to fetch it.
-            </p>
-            <!-- END SOURCE: MEDIA ELEMENTS SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#media-elements) -->
-            <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
-            <p>
-              The first <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">task</a>
-              that is <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queued</a>
-              by the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#networking-task-source">
-              networking task source</a> while the image is being <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#fetch">fetched</a>
-              must set the <code>picture</code> element’s state to <span title=
-              "picture-inc">partially available</span>.
-            </p>
-            <p>
-              If the resource is in a supported image format, then each
-              <a href="http://www.w3.org/TR/html51/webappapis.html#concept-task">
-              task</a> that is <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queued</a>
-              by the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#networking-task-source">
-              networking task source</a> while the image is being <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#fetch">fetched</a>
-              must update the presentation of the image appropriately (e.g. if
-              the image is a progressive JPEG, each packet can improve the
-              resolution of the image). In addition, if the resource is
-              <a href="http://www.w3.org/TR/html51/infrastructure.html#cors-same-origin">
-              CORS-same-origin</a>, each such <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">task</a>
-              must <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#fire-a-progress-event">
-              fire a progress event</a> named <code title=
-              "event-progress">progress</code> at the <code>picture</code>
-              element.
-            </p>
-            <p>
-              Furthermore, the last <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">task</a>
-              that is <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queued</a>
-              by the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#networking-task-source">
-              networking task source</a> once the resource has been <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#fetch">fetched</a>
-              must additionally run the steps for the matching entry in the
-              following list:
-            </p>
-            <dl class="switch">
-              <dt>
-                If the download was successful and the user agent was able to
-                determine the image’s width and height
-              </dt>
-              <dd>
-                <ol>
-                  <li>
-                    <p>
-                      Set the <code>picture</code> element to the <span title=
-                      "picture-all">completely available</span> state.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      Add the image to the <span>list of available
-                      images</span> using the key <var>key</var>.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-same-origin">
-                      CORS-same-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#fire-a-progress-event">
-                      fire a progress event</a> named <code title=
-                      "event-load">load</code> at the <code>picture</code>
-                      element.
-                    </p>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-cross-origin">
-                      CORS-cross-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                      fire a simple event</a> named <code title=
-                      "event-load">load</code> at the <code>picture</code>
-                      element.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-same-origin">
-                      CORS-same-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#fire-a-progress-event">
-                      fire a progress event</a> named <code title=
-                      "event-loadend">loadend</code> at the
-                      <code>picture</code> element.
-                    </p>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-cross-origin">
-                      CORS-cross-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                      fire a simple event named</a> <code title=
-                      "event-loadend">loadend</code> at the
-                      <code>picture</code> element.
-                    </p>
-                  </li>
-                </ol>
-              </dd>
-              <dt>
-                Otherwise
-              </dt>
-              <dd>
-                <ol>
-                  <li>
-                    <p>
-                      Set the <code>picture</code> element to the <span title=
-                      "picture-error">broken</span> state.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-same-origin">
-                      CORS-same-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#fire-a-progress-event">
-                      fire a progress event</a> named <code title=
-                      "event-load">load</code> at the <code>picture</code>
-                      element.
-                    </p>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-cross-origin">
-                      CORS-cross-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                      fire a simple event</a> named <code title=
-                      "event-load">load</code> at the <code>picture</code>
-                      element.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-same-origin">
-                      CORS-same-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#fire-a-progress-event">
-                      fire a progress event</a> named <code title=
-                      "event-loadend">loadend</code> at the
-                      <code>picture</code> element.
-                    </p>
-                    <p>
-                      If the resource is <a href=
-                      "http://www.w3.org/TR/html51/infrastructure.html#cors-cross-origin">
-                      CORS-cross-origin</a>: <a href=
-                      "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                      fire a simple event</a> named <code title=
-                      "event-loadend">loadend</code> at the
-                      <code>picture</code> element.
-                    </p>
-                  </li>
-                </ol>
-              </dd>
-            </dl>
-            <p>
-              On the other hand, if the resource type is <code><a href=
-              "http://www.w3.org/TR/html51/iana.html#multipart/x-mixed-replace">
-              multipart/x-mixed-replace</a></code>, then each <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">task</a>
-              that is <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queued</a>
-              by the <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#networking-task-source">
-              networking task source</a> while the image is being <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#fetch">fetched</a>
-              must also update the presentation of the image, but as each new
-              body part comes in, it must replace the previous image. Once one
-              body part has been completely decoded, the user agent must set
-              the <code>picture</code> element to the <span title=
-              "picture-all">completely available</span> state and <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-load">load</code> at the <code>picture</code> element.
-            </p>
-            <p class="note">
-              The <code title="event-progress">progress</code> and <code title=
-              "event-loadend">loadend</code> events are not fired for
-              <code><a href=
-              "http://www.w3.org/TR/html51/iana.html#multipart/x-mixed-replace">
-              multipart/x-mixed-replace</a></code> image streams.
-            </p>
-            <p>
-              Otherwise, either the image data is corrupted in some fatal way
-              such that the image dimensions cannot be obtained, or the image
-              data is not in a supported file format; the user agent must set
-              the <code>picture</code> element to the <span title=
-              "picture-error">broken state</span>, abort the <a href=
-              "http://www.w3.org/TR/html51/infrastructure.html#fetch">fetching</a>
-              algorithm, discarding any pending <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#concept-task">tasks</a>
-              generated by that algorithm, and then <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-              a task</a> to first <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-error">error</code> at the <code>picture</code> element
-              and then <a href=
-              "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-              fire a simple event</a> named <code title=
-              "event-loadend">loadend</code> at the <code>picture</code>
-              element.
-            </p>
+            <ul>
+              <li>
+                <p>
+                  All instances of “media element” should be read as
+                  “<code>picture</code> element”.
+                </p>
+              </li>
+              <li>
+                <p>
+                  All instances of “media data” should be read as “image data”.
+                </p>
+              </li>
+            </ul>
           </li>
         </ol>
         <p>
-          While a user agent is running the above algorithm for an element
-          <var>x</var>, there must be a strong reference from the element’s
-          <code>Document</code> to the element <var>x</var>, even if that
-          element is not <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#in-a-document">in</a>
-          its <code>Document</code>.
-        </p>
-        <p>
-          When a <code>picture</code> element is in the <span title=
-          "picture-all">completely available</span> state <em>and</em> the user
-          agent can decode the media data without errors, then the
-          <code>picture</code> element is said to be <dfn>fully
-          decodable</dfn>.
-        </p>
-        <p>
-          Whether the image is fetched successfully or not (e.g. whether the
-          response code was a 2xx code <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#concept-http-equivalent-codes">
-          or equivalent</a>) must be ignored when determining the image’s type
-          and whether it is a valid image.
-        </p>
-        <p class="note">
-          This allows servers to return images with error responses, and have
-          them displayed.
-        </p>
-        <p>
-          The user agent should apply the <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#content-type-sniffing:-image">
-          image sniffing rules</a> to determine the type of the image, with the
-          image’s <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#content-type">associated
-          Content-Type headers</a> giving the <var>official type</var>. If
-          these rules are not applied, then the type of the image must be the
-          type given by the image’s <a href=
-          "http://www.w3.org/TR/html51/infrastructure.html#content-type">associated
-          Content-Type headers</a>.
-        </p>
-        <p>
-          User agents must not support non-image resources with the
-          <code>picture</code> element (e.g. XML files whose root element is an
-          HTML element). User agents must not run executable code (e.g.
-          scripts) embedded in the image resource. User agents must only
-          display the first page of a multipage resource (e.g. a PDF file).
-          User agents must not allow the resource to act in an interactive
-          fashion, but should honor any animation in the resource.
-        </p>
-        <p>
-          This specification does not specify which image types are to be
-          supported.
+          A <code>picture</code> element is considered <a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#img-good"><dfn>fully
+          decodable</dfn></a> as defined in <code><a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>. Determination of image type, and which resource types
+          a user agent must not support, is as defined in <code><a href=
+          "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>.
         </p>
       </div>
-      <hr>
       <h3>
         Representation
       </h3>
@@ -2383,8 +1661,10 @@ picture {
         </p>
         <p class="note">
           This needs to be updated with cases for <code title=
-          "attr-picture-srcset">srcset</code> and child elements.
+          "attr-picture-srcset">srcset</code> and child elements. The content
+          below is from <code>img</code>, but that’s not what we should use.
         </p>
+        <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
         <dl class="switch">
           <dt>
             If the <code title="attr-picture-src">src</code> attribute is set
