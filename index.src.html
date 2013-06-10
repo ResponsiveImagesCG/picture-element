@@ -1304,13 +1304,15 @@ picture {
         <p>
           What we want to do is have the <code>picture</code> behave exactly
           the same as an <code>img</code> element, but with the only difference
-          being that it is <code>source</code> elements are used to determine
-          the value of the <code title="attr-picture-src">src</code> or
-          <code title="attr-picture-srcset">srcset</code> IDL attributes (and
-          hence what image content is displayed). How that is determined is
-          through using the <code title="attr-source-media">media</code> and
-          <code title="attr-source-type">type</code> attributes of the
-          <code>source</code> element.
+          being that, if <code title="attr-picture-src">src</code> or
+          <code title="attr-picture-srcset">srcset</code> aren’t set, it is
+          <code>source</code> elements are used to determine the value of the
+          <code title="attr-picture-src">src</code> or <code title=
+          "attr-picture-srcset">srcset</code> IDL attributes (and hence what
+          image content is displayed). How that is determined is through using
+          the <code title="attr-source-media">media</code> and <code title=
+          "attr-source-type">type</code> attributes of the <code>source</code>
+          element.
         </p>
         <p>
           So, to derive the source image: ignoring any sources whose
