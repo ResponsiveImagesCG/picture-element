@@ -1,6 +1,6 @@
 <!DOCTYPE html><head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
     <title>
       The picture element
     </title>
@@ -288,16 +288,16 @@
         color: white;
     }
     </style>
-    <link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-ED">
+    <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
     <!--[if lt IE 9]><script src='http://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
 
-    <link class="ricg" rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial.css">
+    <link class="ricg" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial.css" rel="stylesheet">
   </head>
   <body>
     <header>
       <div class="head">
         <p>
-          <a href="http://responsiveimages.org"><img alt="Responsive Images Community Group" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" style="float:right"></a> <a href="http://www.w3.org/"><img alt="W3C" height="48" width="72" src="http://www.w3.org/Icons/w3c_home"></a>
+          <a href="http://responsiveimages.org"><img alt="Responsive Images Community Group" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" style="float:right"></a> <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a>
         </p>
         <h1>
           The picture element
@@ -305,8 +305,8 @@
         <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">
           An HTML extension for adaptive images
         </h2>
-        <h2 class="no-num no-toc ricg" id="living-document-last-updated-22-may-2013">
-          Living document - Last updated 22 May 2013
+        <h2 class="no-num no-toc ricg" id="living-document-last-updated-10-june-2013">
+          Living document - Last updated 10 June 2013
         </h2>
         <dl>
           <dt>
@@ -457,9 +457,22 @@
  <li><a href="#the-picture-element"><span class="secno">4 </span>
       The <code>picture</code> element
     </a></li>
- <li><a href="#algorithm-for-deriving-the-source-image"><span class="secno">5 </span>
-      Algorithm for deriving the source image
+ <li><a href="#algorithms-for-deriving-the-source-image"><span class="secno">5 </span>
+      Algorithms for deriving the source image
+    </a>
+  <ol class="toc">
+   <li><a href="#picture-load-algorithm"><span class="secno">5.1 </span>
+        Picture load algorithm
+      </a></li>
+   <li><a href="#resource-selection-algorithm"><span class="secno">5.2 </span>
+      Resource selection algorithm
     </a></li>
+   <li><a href="#resource-fetching-algorithm"><span class="secno">5.3 </span>
+        Resource fetching algorithm
+      </a></li>
+   <li><a href="#representation"><span class="secno">5.4 </span>
+        Representation
+      </a></ol></li>
  <li><a class="no-num" href="#open-issues">
       Open Issues
     </a></li>
@@ -636,7 +649,7 @@
     </h2>
     <dl>
       <dt>
-        <a title="element-dfn-categories" href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-categories">Categories</a>:
+        <a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-categories" title="element-dfn-categories">Categories</a>:
       </dt>
       <dd>
         <a href="http://dev.w3.org/html5/spec/single-page.html#flow-content-1">Flow
@@ -655,7 +668,7 @@
         content</a>.
       </dd>
       <dt>
-        <a title="element-dfn-contexts" href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts">Contexts in which this element can be
+        <a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts" title="element-dfn-contexts">Contexts in which this element can be
         used</a>:
       </dt>
       <dd>
@@ -663,7 +676,7 @@
         content</a> is expected.
       </dd>
       <dt>
-        <a title="element-dfn-content-model" href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model">Content model</a>:
+        <a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model" title="element-dfn-content-model">Content model</a>:
       </dt>
       <dd>
         If zero descendents, then <a href="http://dev.w3.org/html5/spec/single-page.html#transparent">transparent</a>.
@@ -675,7 +688,7 @@
         Zero or one <code>img</code> element, serving as <a class="internalDFN" href="#dfn-fallback-content">fallback content</a>.
       </dd>
       <dt>
-        <a title="element-dfn-attributes" href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes">Content attributes</a>:
+        <a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:
       </dt>
       <dd>
         <a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global
@@ -706,22 +719,22 @@
         <code>height</code>
       </dd>
       <dt>
-        <a title="element-dfn-dom" href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom">DOM interface</a>:
+        <a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:
       </dt>
       <dd>
         <pre>[NamedConstructor=Picture,
  NamedConstructor=Picture(unsigned long width),
  NamedConstructor=Picture(unsigned long width, unsigned long height)]
 HTMLPictureElement : HTMLImageElement{
-   attribute DOMString <a title="dom-picture-alt" href="#dom-picture-alt">alt</a>;
-   attribute DOMString <a title="dom-picture-src" href="#dom-picture-src">src</a>;
-   attribute DOMString <a title="dom-picture-crossOrigin" href="#dom-picture-crossorigin">crossOrigin</a>;
-   attribute DOMString <a title="dom-picture-srcset" href="#dom-picture-srcset">srcset</a>;
-   readonly attribute DOMString <a title="dom-picture-currentsrc" href="#dom-picture-currentsrc">currentSrc</a>;
-   attribute DOMString <a title="dom-picture-useMap" href="#dom-picture-usemap">useMap</a>;
-   attribute boolean <a title="dom-picture-isMap" href="#dom-picture-ismap">isMap</a>;
+   attribute DOMString <a href="#dom-picture-alt" title="dom-picture-alt">alt</a>;
+   attribute DOMString <a href="#dom-picture-src" title="dom-picture-src">src</a>;
+   attribute DOMString <a href="#dom-picture-crossorigin" title="dom-picture-crossOrigin">crossOrigin</a>;
+   attribute DOMString <a href="#dom-picture-srcset" title="dom-picture-srcset">srcset</a>;
+   readonly attribute DOMString <a href="#dom-picture-currentsrc" title="dom-picture-currentsrc">currentSrc</a>;
+   attribute DOMString <a href="#dom-picture-usemap" title="dom-picture-useMap">useMap</a>;
+   attribute boolean <a href="#dom-picture-ismap" title="dom-picture-isMap">isMap</a>;
    readonly attribute DOMString media;
-   void <a title="dom-picture-load" href="#dom-picture-load">load</a>();
+   void <a href="#dom-picture-load" title="dom-picture-load">load</a>();
 }
 </pre>
       </dd>
@@ -730,7 +743,7 @@ HTMLPictureElement : HTMLImageElement{
       The <code><dfn id="dfn-picture">picture</dfn></code> element used for
       displaying an image that can come from a range of sources (including the
       <dfn id="attr-picture-src" title="attr-picture-src"><code>src</code></dfn> and <dfn id="attr-picture-srcset" title="attr-picture-srcset"><code>srcset</code></dfn> attributes). Which image
-      the user agent displays depends on the <a class="internalDFN" href="#dfn-algorithm-for-deriving-the-source-image">algorithm for deriving the source image</a>. The value of
+      the user agent displays depends on the <a class="internalDFN" href="#dfn-algorithms-for-deriving-the-source-image">algorithms for deriving the source image</a>. The value of
       the <dfn id="attr-picture-alt" title="attr-picture-alt"><code>alt</code></dfn> attribute provides equivalent
       content for those who cannot process images or who have image loading
       disabled.
@@ -754,7 +767,7 @@ HTMLPictureElement : HTMLImageElement{
       animated vector graphics (XML files with an SVG root element that use
       declarative SMIL animation), and so forth. However, these definitions
       preclude SVG files with script, multipage PDF files, interactive MNG
-      files, HTML documents, plain text documents, and so forth. <a href="http://www.w3.org/TR/html5/references.html#refsPNG">[PNG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsGIF">[GIF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsJPEG">[JPEG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsPDF">[PDF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsXML">[XML]</a> <a href="http://www.w3.org/TR/html5/references.html#refsAPNG">[APNG]</a> 
+      files, HTML documents, plain text documents, and so forth. <a href="http://www.w3.org/TR/html5/references.html#refsPNG">[PNG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsGIF">[GIF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsJPEG">[JPEG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsPDF">[PDF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsXML">[XML]</a> <a href="http://www.w3.org/TR/html5/references.html#refsAPNG">[APNG]</a>
       <!-- <a href="#refsAGIF">[AGIF]</a> --> <a href="http://www.w3.org/TR/html5/references.html#refsSVG">[SVG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsMNG">[MNG]</a>
     </p>
     <p>
@@ -780,8 +793,7 @@ HTMLPictureElement : HTMLImageElement{
       <p>
         The <dfn id="dom-picture-currentsrc" title="dom-picture-currentSrc"><code>currentSrc</code></dfn>
         IDL attribute is initially the empty string. Its value is changed by
-        the <span title="dfn-algorithm-for-deriving-the-source-image">resource
-        selection algorithm</span> defined below.
+        the <a href="#resource-selection-algorithm-0">resource selection algorithm</a> defined below.
       </p>
     </div>
     <p class="note">
@@ -927,91 +939,173 @@ HTMLPictureElement : HTMLImageElement{
           </p>
         </dd>
       </dl>
-      <div class="impl">
+    </div>
+    <hr>
+    <h2 id="algorithms-for-deriving-the-source-image"><span class="secno">5 </span>
+      Algorithms for deriving the source image
+    </h2>
+    <div class="impl">
+      <div>
         <p>
-          When the <dfn id="dom-picture-load" title="dom-picture-load"><code>load()</code></dfn>
-          method on a <code><a href="#dfn-picture">picture</a></code> element is invoked, the user agent
-          must run the load algorithm.
+          The algorithms for deriving the <dfn id="source-image">source image</dfn> are as
+          follows. The result is the <a href="#source-image" title="source image">image
+          source</a> to be used by the <code><a href="#dfn-picture">picture</a></code> element, which
+          reflects the <code><a href="#dfn-picture">picture</a></code> element’s <code title="attr-picture-currentsrc">currentSrc</code> IDL attribute.
+        </p>
+        <p>
+          A <code><a href="#dfn-picture">picture</a></code> element is always in one of the following
+          states, as defined in <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>: <a href="http://www.w3.org/TR/html51/embedded-content-0.html#img-none"><dfn id="unavailable">unavailable</dfn></a>,
+          <a href="http://www.w3.org/TR/html51/embedded-content-0.html#img-inc"><dfn id="partially-available">partially
+          available</dfn></a>, <a href="http://www.w3.org/TR/html51/embedded-content-0.html#img-all"><dfn id="completely-available">completely
+          available</dfn></a>, <a href="http://www.w3.org/TR/html51/embedded-content-0.html#img-error"><dfn id="broken">broken</dfn></a>
+          (all instances of “<code>img</code>” should be read as
+          “<code><a href="#dfn-picture">picture</a></code>”).
+        </p>
+        <p>
+          A <code><a href="#dfn-picture">picture</a></code> element’s <a href="http://www.w3.org/TR/html51/embedded-content-0.html#last-selected-source">
+          <dfn id="last-selected-source">last selected source</dfn></a> and <a href="http://www.w3.org/TR/html51/embedded-content-0.html#current-pixel-density">
+          <dfn id="current-pixel-density">current pixel density</dfn></a>, and a <code><a href="http://www.w3.org/TR/html51/dom.html#document">Document</a></code>’s
+          <a href="http://www.w3.org/TR/html51/embedded-content-0.html#list-of-available-images">
+          <dfn id="list-of-available-images">list of available images</dfn></a> are as defined in
+          <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code> (all instances of “<code>img</code>” should be read as
+          “<code><a href="#dfn-picture">picture</a></code>”).
+        </p>
+        <p>
+          A <code><a href="#dfn-picture">picture</a></code> element’s <a href="http://www.w3.org/TR/html51/embedded-content-0.html#delaying-the-load-event-flag">
+          <dfn id="delaying-the-load-event-flag">delaying-the-load-event flag</dfn></a> is as defined in <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+          Elements</a> (all instances of “media element” should be read as
+          “<code><a href="#dfn-picture">picture</a></code>”).
+        </p>
+        <hr>
+        <p>
+          Image data for a <code><a href="#dfn-picture">picture</a></code> element is obtained or updated
+          by running the <a href="#picture-load-algorithm-0">picture load algorithm</a> with the
+          <code><a href="#dfn-picture">picture</a></code> element as input.
+        </p>
+        <p>
+          The timing of how image data is obtained–specifically if and when
+          image data is loaded on demand , if and when image data is loaded
+          immediately, and if and when and image is loaded synchronously or
+          asynchronously–is defined as in <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>(all instances of “<code>img</code>” should be read as
+          “<code><a href="#dfn-picture">picture</a></code>” and all instances of “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code>” should be read as “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> or <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code>”).
+        </p>
+        <p>
+          Invoking a <code><a href="#dfn-picture">picture</a></code> element’s <dfn id="dom-picture-load" title="dom-picture-load"><code>load()</code></dfn> function must trigger
+          the <a href="#picture-load-algorithm-0">picture load algorithm</a>.
+        </p>
+        <p>
+          A user agent may override requests for higher-resolution images based
+          on user preferences. For example: “always request high-resolution
+          images”, “always request low-resolution images”, and “request
+          high-resolution images as bandwidth permits” based on the bandwidth
+          information available to the browser.
         </p>
       </div>
-    </div>
-    <h2 id="algorithm-for-deriving-the-source-image"><span class="secno">5 </span>
-      Algorithm for deriving the source image
-    </h2>
-    <p>
-      The <dfn id="dfn-algorithm-for-deriving-the-source-image">algorithm for
-      deriving the source image</dfn> as follows. The result is the image
-      source to be used by the <code><a href="#dfn-picture">picture</a></code> element, which reflects the
-      <code><a href="#dfn-picture">picture</a></code> element's <span><code>src</code> IDL
-      attribute</span>:
-    </p>
-    <div class="note">
-      <div class="note-title">
-        <span>Note</span>
-      </div>
-      <div class="">
+      <h3 id="picture-load-algorithm"><span class="secno">5.1 </span>
+        Picture load algorithm
+      </h3>
+      <p>
+        The <dfn id="picture-load-algorithm-0">picture load algorithm</dfn> must be run when the user agent
+        is to obtain the image data of a <code><a href="#dfn-picture">picture</a></code> element. The user
+        agent may at any time run the following algorithm to update a
+        <code><a href="#dfn-picture">picture</a></code> element’s image in order to react to changes in
+        the environment. The picture load algorithm consists of the following
+        steps:
+      </p>
+      <p>
+        This algorithm combines portions of <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">img</a></code>’s
+        <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+        update the image data</a> algorithm and <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+        Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
+        media element load algorithm</a>, as follows:
+      </p>
+      <ol>
+        <li>
+          <p>
+            Perform steps 1–3 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “<code>img</code>” should be read as
+                “<code><a href="#dfn-picture">picture</a></code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code>”
+                should be read as “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> or
+                <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “fetching algorithm” should be read as
+                “<a href="#resource-selection-algorithm-0">resource selection algorithm</a> or <a href="#resource-fetching-algorithm-0">resource
+                fetching algorithm</a>”.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform step 4, substep 1 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
+            media element load algorithm</a>.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “media element” should be read as
+                “<code><a href="#dfn-picture">picture</a></code> element”.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform step 4 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
+          </p>
+        </li>
+        <li>
+          <p>
+            Run the <a href="#resource-selection-algorithm-0">resource selection algorithm</a> with the
+            <code><a href="#dfn-picture">picture</a></code> element as input.
+          </p>
+        </li>
+      </ol>
+      <div class="note">
         <p>
-          What a <code><a href="#the-picture-element">picture</a></code>
-          element represents depends on the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code>
-          attribute, <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute, the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code>
-          attribute, and any child elements.
+          <em>This note is non-normative.</em>
         </p>
         <p>
           What we want to do is have the <code><a href="#dfn-picture">picture</a></code> behave exactly
           the same as an <code>img</code> element, but with the only difference
-          being that it is <code>source</code> elements is used to determine
-          the value of the <code>src</code> IDL attribute (and hence what image
-          content is displayed). How that is determined is through using the
-          <code>media</code> attribute attribute of the <code>source</code>
-          element.
+          being that, if <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> or
+          <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> aren’t set, it is <code>source</code> elements are used to determine
+          the value of the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> or
+          <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> IDL attributes (and
+          hence what image content is displayed). How that is determined is
+          through using the <code title="attr-source-media">media</code> and
+          <code title="attr-source-type">type</code> attributes of the
+          <code>source</code> element.
         </p>
         <p>
-          So, to derive the <dfn id="dfn-source-image">source image</dfn>:
-          ignoring any sources whose <code>type</code> is not supported by the
+          So, to derive the source image: ignoring any sources whose
+          <code title="attr-source-type">type</code> is not supported by the
           browser, gather all the media queries from the <code>source</code>
-          elements' <code>media</code> attributes into a "stylesheet", in
-          document order. Any missing <code>media</code> attributes are just
-          assumed to mean "all". Any media attributes that are not valid media
-          queries are ignored. So, given the following:
+          elements’ <code title="attr-source-media">media</code> attributes
+          into a “stylesheet”, in document order. Any missing <code title="attr-source-media">media</code> attributes are just assumed to mean
+          “all”. Any media attributes that are not valid media queries are
+          ignored.
         </p>
-        <pre>&lt;picture id="pictureElement"&gt;
-<span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
-   &lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
-
-   &lt;!-- assume media all --&gt;
-   &lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;</span>
-
-   &lt;!-- the following are ignored --&gt;
-<span class="example">   &lt;source media=" is the message " srcset=""&gt;
-      </span>
-&lt;/picture&gt;
-</pre>
-        <p>
-          Becomes the rough CSS equivalent of (a virtual stylesheet for the
-          document?):
-        </p>
-        <pre>//assume #pictureElement is magically scoped to the corresponding element.
-@media all{
-   #pictureElement{
-      background-image: image-set(<span class="example">small-1.jpg 1x, small-2.jpg 2x</span>);
-   }
-}
-
-@media<span class="example"> all and (min-width: 45em)</span>{
-   #pictureElement{
-      background-image: image-set(<span class="example">large-1.jpg 1x, large-2.jpg 2x</span>);
-   }
-}
-
-@media <span class="example">all and </span><span class="example">(min-width: 18em)</span>{
-   #pictureElement{
-      background-image: image-set(<span class="example">med-1.jpg 1x, med-2.jpg 2x</span>);
-   }
-}
-</pre>
         <p>
           The API then just works the same as per images. Events are fired in
-          the same way as if the image's src IDL attribute had been set
+          the same way as if the image’s src IDL attribute had been set
           manually by the author.
         </p>
         <p>
@@ -1020,25 +1114,410 @@ HTMLPictureElement : HTMLImageElement{
         </p>
       </div>
     </div>
-    <p>
-      A user agent <em class="rfc2119" title="may">may</em> override requests
-      for higher-resolution images based on user preferences. For example:
-      “always request high-resolution images,” “always request low-resolution
-      images,” and “request high-resolution images as bandwidth permits” based
-      on the bandwidth information available to the browser.
-    </p>
-    <p>
-      The <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute does not represent advisory
-      information. User agents must not present the contents of the
-      <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code>
-      attribute in the same way as content of the <code title="attr-title"><a href="dom.html#attr-title">title</a></code> attribute.
-    </p>
-    <p class="warning">
-      While user agents are encouraged to repair cases of missing <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attributes,
-      authors must not rely on such behavior. <a href="http://www.w3.org/TR/html5/embedded-content-0.html#alt">Requirements for
-      providing text to act as an alternative for images</a> are described in
-      detail in the <code>img</code> section.
-    </p>
+    <h3 id="resource-selection-algorithm"><span class="secno">5.2 </span>
+      Resource selection algorithm
+    </h3>
+    <div>
+      <p>
+        The <dfn id="resource-selection-algorithm-0">resource selection algorithm</dfn> for a <code><a href="#dfn-picture">picture</a></code>
+        element is always invoked synchronously, but one of the first steps in
+        the algorithm is to return and continue running the remaining steps
+        asynchronously. It has <a href="http://www.w3.org/TR/html51/webappapis.html#synchronous-section">synchronous
+        sections</a> (which are triggered as part of the <a href="http://www.w3.org/TR/html51/webappapis.html#event-loop">event loop</a>
+        algorithm).
+      </p>
+      <p>
+        This algorithm combines portions of <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">img</a></code>’s
+        <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+        update the image data</a> algorithm, <code><a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>’s
+        <a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
+        update the image data</a> algorithm, and <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+        Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+        resource selection algorithm</a>, as follows:
+      </p>
+      <ol>
+        <li>
+          <p>
+            Perform steps 3, 4, 6, and 8 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “media element” should be read as
+                “<code><a href="#dfn-picture">picture</a></code> element”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code>”
+                should be read as “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> or
+                <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                When that algorithm instructs a user agent to “set the
+                <code>networkState</code> to <code>NETWORK_EMPTY</code>”, the
+                user agent should instead set the <code><a href="#dfn-picture">picture</a></code> element
+                to the <span title="picture-error">broken state</span> and
+                <a href="http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
+                a task</a> to <a href="http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
+                fire a simple event</a> named <code title="event-error">error</code> at the <code><a href="#dfn-picture">picture</a></code> element,
+                and set the <code><a href="#dfn-picture">picture</a></code> element’s
+                <a href="#delaying-the-load-event-flag">delaying-the-load-event flag</a> to false.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            If <var>mode</var> is <i>attribute</i>, perform step 5 of the
+            <code><a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>
+            <a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
+            update the image data</a> algorithm, with the <code><a href="#dfn-picture">picture</a></code>
+            element as the input.
+          </p>
+          <p>
+            Otherwise, <code>source</code> elements will be used; perform the
+            <code>source</code> element substeps 1, 2, 5, 6 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+          <ul>
+            <li>
+              <p>
+                The first instance of “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code>” should be read as “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> or <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code>”; the second should be read
+                as “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> and <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code>”.
+              </p>
+            </li>
+          </ul>
+          <p>
+            Perform step 5 of the <code><a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>
+            <a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
+            update the image data</a> algorithm, with the <code>source</code>
+            element as the input.
+          </p>
+          <p>
+            Perform the <code>source</code> element substeps 10, 11, 13–17,
+            21–23, and 26 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+          <ul>
+            <li>
+              <p>
+                Ignore references to the <i>Waiting</i> step.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform steps 6 and 7 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “<code>img</code>” should be read as
+                “<code><a href="#dfn-picture">picture</a></code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                If step 7’s <a href="http://www.w3.org/TR/html51/infrastructure.html#resolve-a-url">
+                resolve</a> is unsuccessful, set the <code><a href="#dfn-picture">picture</a></code>
+                element to the <span title="picture-error">broken state</span>,
+                <a href="http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
+                a task</a> to <a href="http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
+                fire a simple event</a> named <code title="event-error">error</code> at the <code><a href="#dfn-picture">picture</a></code> element,
+                set the <code><a href="#dfn-picture">picture</a></code> element’s
+                <a href="#delaying-the-load-event-flag">delaying-the-load-event flag</a> to false before
+                aborting.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Let <var>absolute URL</var> be the <a href="http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
+            URL</a> of <var>selected source</var>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Perform <code>source</code> element substep 7 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+        </li>
+        <li>
+          <p>
+            Perform steps 8–12 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm.
+          </p>
+          <ul>
+            <li>
+              <p>
+                All instances of “the resulting <a href="http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
+                URL</a>” should be read as “<var>absolute URL</var>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “<code>img</code>” should be read as
+                “<code><a href="#dfn-picture">picture</a></code>”.
+              </p>
+            </li>
+            <li>
+              <p>
+                All instances of “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code>”
+                should be read as “<code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> or
+                <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code>”.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Perform <code>source</code> element substep 9 of the <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>’s step 9.
+          </p>
+          <ul>
+            <li>
+              <p>
+                The <span>resource fetch algorithm</span> that runs is
+                <code><a href="#dfn-picture">picture</a></code>’s, not <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+                Media Elements</a>’.
+              </p>
+            </li>
+            <li>
+              <p>
+                If the load fails, set the <code><a href="#dfn-picture">picture</a></code> element to the
+                <span title="img-error">broken</span> state, <a href="http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
+                a task</a> to <a href="http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
+                fire a simple event</a> named <code title="event-error">error</code> at the <code><a href="#dfn-picture">picture</a></code> element,
+                set the <code><a href="#dfn-picture">picture</a></code> element’s
+                <a href="#delaying-the-load-event-flag">delaying-the-load-event flag</a> to false, and abort
+                these steps.
+              </p>
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <h3 id="resource-fetching-algorithm"><span class="secno">5.3 </span>
+        Resource fetching algorithm
+      </h3>
+      <div>
+        <p>
+          The <dfn id="resource-fetching-algorithm-0">resource fetching algorithm</dfn> for a <code><a href="#dfn-picture">picture</a></code>
+          element and a given <a href="http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
+          URL</a> combines portions of <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>’s <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+          update the image data</a> algorithm and <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media
+          Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
+          resource fetch algorithm</a>, as follows:
+        </p>
+        <ol>
+          <li>
+            <p>
+              Perform step 14 of <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+              img</a></code>’s <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+              update the image data</a>.
+            </p>
+            <ul>
+              <li>
+                <p>
+                  All instances of “<code>img</code>” should be read as
+                  “<code><a href="#dfn-picture">picture</a></code>”.
+                </p>
+              </li>
+            </ul>
+            <p>
+              During this step, <a href="http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
+              fire a simple event</a> named <code title="event-progress">progress</code>, as defined in <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+              Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
+              resource fetch algorithm</a> step 4.
+            </p>
+            <p>
+              The <dfn id="stall-timeout">stall timeout</dfn> is as defined in <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+              Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
+              resource fetch algorithm</a> step 4. User agents may block, slow,
+              or suspend downloads as defined in the same step. User agents may
+              use whatever means necessary to fetch the resource, as defined in
+              the same step.
+            </p>
+            <ul>
+              <li>
+                <p>
+                  All instances of “media element” should be read as
+                  “<code><a href="#dfn-picture">picture</a></code> element”.
+                </p>
+              </li>
+              <li>
+                <p>
+                  All instances of “media data” should be read as “image data”.
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ol>
+        <p>
+          A <code><a href="#dfn-picture">picture</a></code> element is considered <a href="http://www.w3.org/TR/html51/embedded-content-0.html#img-good"><dfn id="fully-decodable">fully
+          decodable</dfn></a> as defined in <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>. Determination of image type, and which resource types
+          a user agent must not support, is as defined in <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+          img</a></code>.
+        </p>
+      </div>
+      <h3 id="representation"><span class="secno">5.4 </span>
+        Representation
+      </h3>
+      <div>
+        <p>
+          What a <code><a href="#dfn-picture">picture</a></code> element represents depends on the
+          <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute, the <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute, the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute, and any child elements.
+        </p>
+        <p class="note">
+          This needs to be updated with cases for <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> and child elements. The content
+          below is from <code>img</code>, but that’s not what we should use.
+        </p>
+        <!-- BEGIN SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
+        <dl class="switch">
+          <dt>
+            If the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute is set
+            and the <code>alt</code> attribute is set to the empty string
+          </dt>
+          <dd>
+            <p>
+              The image is either decorative or supplemental to the rest of the
+              content, redundant with some other information in the document.
+            </p>
+            <p>
+              If the image is <span title="picture-available">available</span>
+              and the user agent is configured to display that image, then the
+              element <a href="http://www.w3.org/TR/html51/dom.html#represents">represents</a>
+              the element’s image data.
+            </p>
+            <p>
+              Otherwise, the element <a href="http://www.w3.org/TR/html51/dom.html#represents">represents</a>
+              nothing, and may be omitted completely from the rendering. User
+              agents may provide the user with a notification that an image is
+              present but has been omitted from the rendering.
+            </p>
+          </dd>
+          <dt>
+            If the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute is set
+            and the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute is set
+            to a value that isn’t empty
+          </dt>
+          <dd>
+            <p>
+              The image is a key part of the content; the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute gives a textual
+              equivalent or replacement for the image.
+            </p>
+            <p>
+              If the image is <span title="picture-available">available</span>
+              and the user agent is configured to display that image, then the
+              element <a href="http://www.w3.org/TR/html51/dom.html#represents">represents</a>
+              the element’s image data.
+            </p>
+            <p>
+              Otherwise, the element <a href="http://www.w3.org/TR/html51/dom.html#represents">represents</a>
+              the text given by the <code>alt</code> attribute. User agents may
+              provide the user with a notification that an image is present but
+              has been omitted from the rendering.
+            </p>
+          </dd>
+          <dt>
+            If the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute is set
+            and the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute is not
+          </dt>
+          <dd>
+            <p>
+              There is no textual equivalent of the image available.
+            </p>
+            <p>
+              If the image is <span title="picture-available">available</span>
+              and the user agent is configured to display that image, then the
+              element <a href="represents">represents</a> the element’s image
+              data.
+            </p>
+            <p>
+              Otherwise, the user agent should display some sort of indicator
+              that there is an image that is not being rendered, and may, if
+              requested by the user, or if so configured, or when required to
+              provide contextual information in response to navigation, provide
+              caption information for the image, derived as follows:
+            </p>
+            <ol>
+              <li>
+                <p>
+                  If the image is a descendant of a figure element that has a
+                  child <code>figcaption</code> element, and, ignoring the
+                  <code>figcaption</code> element and its descendants, the
+                  figure element has no <code>Text</code> node descendants
+                  other than <a href="http://www.w3.org/TR/html51/dom.html#inter-element-whitespace">
+                  inter-element whitespace</a>, and no <a href="http://www.w3.org/TR/html51/dom.html#embedded-content-2">embedded
+                  content</a> descendant other than the <code><a href="#dfn-picture">picture</a></code>
+                  element, then the contents of the first such
+                  <code>figcaption</code> element are the caption information;
+                  abort these steps.
+                </p>
+              </li>
+              <li>
+                <p>
+                  There is no caption information.
+                </p>
+              </li>
+            </ol>
+          </dd>
+          <dt>
+            If the <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute is not
+            set and either the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code>
+            attribute is set to the empty string or the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute is not set at all
+          </dt>
+          <dd>
+            <p>
+              The element <a href="http://www.w3.org/TR/html51/dom.html#represents">represents</a>
+              nothing.
+            </p>
+          </dd>
+          <dt>
+            Otherwise
+          </dt>
+          <dd>
+            <p>
+              The element <a href="http://www.w3.org/TR/html51/dom.html#represents">represents</a>
+              the text given by the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code>
+              attribute.
+            </p>
+          </dd>
+        </dl>
+        <p>
+          The <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute does not
+          represent advisory information. User agents must not present the
+          contents of the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute
+          in the same way as content of the <code title="attr-picture-title">title</code> attribute.
+        </p>
+        <p class="warning auth">
+          While user agents are encouraged to repair cases of missing
+          <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attributes, authors must
+          not rely on such behavior. <a href="http://www.w3.org/TR/html51/embedded-content-0.html#alt">Requirements
+          for providing text to act as an alternative for images are described
+          in the Embedded Content section</a>.
+        </p>
+        <p>
+          The <em>contents</em> of <code><a href="#dfn-picture">picture</a></code> elements, if any, are
+          ignored for the purposes of rendering.
+        </p>
+      </div>
+    </div>
+    <!-- END SOURCE: IMG SPEC (http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element) -->
+    <hr>
     <h2 class="no-num" id="open-issues">
       Open Issues
     </h2>
