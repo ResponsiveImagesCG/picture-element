@@ -636,7 +636,7 @@ function closeWarning(element) {
    &lt;source media="(min-width: 45em)" src="large.jpg"&gt;
    &lt;source media="(min-width: 18em)" src="med.jpg"&gt;
    &lt;source src="small.jpg"&gt;
-   &lt;img src="small.jpg" alt=""&gt;
+   &lt;img src="small.jpg" alt="" lazyload&gt;
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;
 </pre>
@@ -669,11 +669,23 @@ function closeWarning(element) {
    &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
    &lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
    &lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;
-   &lt;img src="small-1.jpg" alt=""&gt;
+   &lt;img src="small-1.jpg" alt="" lazyload&gt;
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;
 </pre>
     </div>
+    <div class="note">
+      <div class="note-title">
+        <span>Note</span>
+      </div>
+      <div class="">
+        <p>
+        The <code>lazyload</code> attribute is used on the <code>&lt;img&gt;</code> tag in the above examples in order to avoid a download
+            of that resource when picture is supported.
+            It enables the user agent to delay the resource's download at least until the resource is added to the DOM, at which point the
+            user agent can detect that the <code>&lt;img&gt;</code> element is a child of a <code>&lt;picture&gt;</code> element.
+        </p>
+      </div>
     <h3>
       Relationship to <code>srcset</code>
     </h3>
