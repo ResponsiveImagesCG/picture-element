@@ -141,10 +141,22 @@
     <section id="abstract">
       <p>
         The <code>picture</code> element provides a way to group multiple
-        versions of an image based on different characteristics (e.g., format,
+        versions of an image using different characteristics (e.g., format,
         resolution, cropping, etc.). This allows the user agent to select the
         optimum image to present to an end-user based on the user agent's
         environmental conditions and constraints.
+      </p>
+      <p>
+        The primary purpose of the <code>picture</code> element is to address
+        use cases [[!respimg-usecases]] that are left unaddressed by the
+        <code>srcset</code> attribute [[html-srcset]]; the most important being
+        <q><a href="http://usecases.responsiveimages.org/#art-direction">art
+        direction</a></q>. Other use cases, such as <q><a href=
+        "http://usecases.responsiveimages.org/#matching-media-features-and-media-types">
+        matching media features and media types</a></q> and matching on
+        supported <q><a href=
+        "http://usecases.responsiveimages.org/#image-formats">image
+        formats</a></q>, are also addressed by this specification.
       </p>
     </section>
     <section id="sotd">
