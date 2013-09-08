@@ -226,13 +226,9 @@
         This specification provides developers with a means to declare multiple
         sources for an image, and, through [[!CSS3-MEDIAQUERIES]] (<cite>CSS
         Media Queries</cite>), it gives developers control as to when those
-        images are to be presented to a user. This is achieved by introducing a
-        new <code>picture</code> element to [[!HTML]] that makes use of the
-        <code>source</code> element. The <code>picture</code> element remains
-        backwards compatible with legacy user agents by degrading gracefully
-        through <span>fallback content</span> (i.e., through the
-        <code>img</code> element) while also potentially providing better
-        accessibility than the existing <code>img</code> element.
+        images are to be presented to a user. This is achieved by introducing
+        the <code>picture</code> element to [[!HTML]], and by enhancing the
+        <code>source</code> element to support [[!html-srcset]].
       </p>
       <p>
         By relying on [[!CSS3-MEDIAQUERIES]], a user agent can <em>respond</em>
@@ -248,10 +244,16 @@
         in media type such as going from screen to print.
       </p>
       <p>
+        The <code>picture</code> element remains backwards compatible with
+        legacy user agents by degrading gracefully through <a>fallback
+        content</a> (i.e., through the <code>img</code> element) while also
+        potentially providing better accessibility than the existing
+        <code>img</code> element.
+      </p>
+      <p>
         This specification also defines the <code>HTMLPictureElement</code>
-        programming interface, which affords developers a set of attributes and
-        methods for interacting with <code>picture</code> elements through
-        ECMAScript.
+        interface, through which developers can interact with
+        <code>picture</code> elements.
       </p>
       <section>
         <h3>
@@ -259,8 +261,9 @@
         </h3>
         <p>
           This first sample shows how to combine the <code>picture</code>
-          element with the source element, while also providing fallback
-          content for legacy user agents through the <code>img</code> element.
+          element with the <code>source</code> element, while also providing
+          fallback content for legacy user agents through the <code>img</code>
+          element.
         </p>
         <pre class="example highlight">
               &lt;picture width="500" height="500"&gt;
@@ -270,19 +273,11 @@
                  &lt;img src="small.jpg" alt="" lazyload&gt;
                  &lt;p&gt;Accessible text&lt;/p&gt;
               &lt;/picture&gt;
-
 </pre>
-        <p class="issue">
-          The following example assumes we can get <a href=
-          "http://dev.w3.org/html5/srcset/">the <code>srcset</code>
-          attribute</a> supported on HTML's <code>source</code> element. See
-          <a href="https://github.com/Wilto/draft-prop/issues/64">issue 64</a>.
-        </p>
         <p>
           This second example shows how the <code>picture</code> element can be
-          used with <a href="http://dev.w3.org/html5/srcset/">the
-          <code>srcset</code> attribute</a> to provide a range of sources
-          suitable for a given media query:
+          used with the <code>srcset</code> attribute [[!html-srcset]] to
+          provide a range of sources suitable for a given media query:
         </p>
         <pre class="example highlight">
             &lt;picture width="500" height="500"&gt;
@@ -297,10 +292,10 @@
         <p class="note">
           The <code>lazyload</code> attribute is used on the
           <code>&lt;img&gt;</code> tag in the above examples in order to avoid
-          a download of that resource when picture is supported. It enables the
-          user agent to delay the resource's download at least until the
-          resource is added to the DOM, at which point the user agent can
-          detect that the <code>&lt;img&gt;</code> element is a child of a
+          a download of that resource when <code>picture</code> is supported.
+          It enables the user agent to delay the resource's download at least
+          until the resource is added to the DOM, at which point the user agent
+          can detect that the <code>&lt;img&gt;</code> element is a child of a
           <code>&lt;picture&gt;</code> element.
         </p>
       </section>
@@ -309,38 +304,38 @@
           Relationship to <code>srcset</code>
         </h3>
         <p>
-          The `srcset` attribute allows authors to define various image
-          resources and “hints” that assist a user agent in determining the
-          most appropriate image source to display. Given a set of image
+          The <code>srcset</code> attribute allows authors to define various
+          image resources and “hints” that assist a user agent in determining
+          the most appropriate image source to display. Given a set of image
           resources, the user agent has the option of either following or
           overriding the author’s declarations to optimize the user experience
           based on criteria such as <a href=
           "http://usecases.responsiveimages.org/#resolution-switching">display
-          density</a>, connection type, <a href=
+          density</a>, network connection type, <a href=
           "http://usecases.responsiveimages.org/#user-control-over-sources">user
           preferences</a>, and so on.
         </p>
         <p>
-          The `picture` element defines conditions under which the UA should
-          follow the author's explicit instructions when selecting which
-          resource to display. This includes image sources with inherent sizes
-          designed to align with layout variations specified in CSS media
-          queries ( see: <a href=
+          The <code>picture</code> element defines conditions under which the
+          use agent needs to follow the author's explicit instructions when
+          selecting which resource to display. This includes image sources with
+          inherent sizes designed to align with layout variations specified in
+          CSS media queries ( see: <a href=
           "http://usecases.responsiveimages.org/#design-breakpoints">design
           breakpoints</a>, <a href=
           "http://usecases.responsiveimages.org/#matching-media-features-and-media-types">
           media features and types</a> and <a href=
           "http://usecases.responsiveimages.org/#relative-units">relative
-          units</a> ) or <a href=
-          "http://usecases.responsiveimages.org/#art-direction">content
-          variations for increased clarity and focus</a> based on the client’s
-          display size.
+          units</a> ) or content variations for increased clarity and focus
+          (i.e., <a href=
+          "http://usecases.responsiveimages.org/#art-direction"><q>art
+          direction</q></a>) based on the client’s viewport.
         </p>
         <p>
-          The proposed solutions are not mutually exclusive, and may work
-          together to address the complete set of <a href=
+          The proposed solutions are not mutually exclusive. They work together
+          to address the complete set of <a href=
           "http://usecases.responsiveimages.org/">use cases and requirements
-          for responsive images</a>.
+          for responsive images</a> (see [[!respimg-usecases]]).
         </p>
       </section>
     </section>
