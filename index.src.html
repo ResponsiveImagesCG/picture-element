@@ -292,7 +292,9 @@ Definitions</h2>
 	specification.
 
 	The following terms are defined by the [[!HTML]] specification:
-	<dfn id="dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">valid media query</a></dfn>.
+	<dfn id="dfn-update-the-image-data"><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#update-the-image-data">update the image data</a></dfn>
+	and
+	<dfn id="dfn-valid-media-query"><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>.
 
 
 <h2 id='the-picture-element'>
@@ -333,6 +335,38 @@ The <a element>picture</a> Element</h2>
 	A <dfn export>source size list</dfn> is a list of zero or more pairs of a <a>media query</a> and a <<length>>,
 	and optionally a default <<length>>.
 
+	The <dfn>relevant mutations</dfn> for an <a element>img</a> element are as follows:
+
+	<ul>
+		<li>
+			The element's <a element-attr for="img">src</a>,
+			<a element-attr for="img">srcset</a>,
+			<a element-attr for="img">sizes</a> or
+			<a element-attr for="img">crossorigin</a> attributes are
+			set, changed, or removed.
+
+		<li>
+			The element is inserted into or removed from a
+			<a element>picture</a> parent element.
+
+		<li>
+			The element's parent is a <a element>picture</a> element
+			and a <a element>source</a> element is inserted as a
+			previous sibling.
+
+		<li>
+			The element's parent is a <a element>picture</a> element
+			and a <a element>source</a> element that was a previous
+			sibling is removed.
+
+		<li>
+			The element's parent is a <a element>picture</a> element
+			and a <a element>source</a> element that is a previous
+			sibling has its <a element-attr for="source">srcset</a>,
+			<a element-attr for="source">sizes</a> or
+			<a element-attr for="media">media</a> attributes are
+			set, changed, or removed.
+	</ul>
 
 <h3 id='algos'>
 Sub-Algorithms</h3>
@@ -340,8 +374,79 @@ Sub-Algorithms</h3>
 <h4 id='select-image-source'>
 Selecting an Image Source</h4>
 
-	<p class='issue'>
-		This is meant to be the HTML integration point.
+	<div class='issue monkey-patch'>
+		In the HTML spec, in the algorithm <a>update the image data</a>,
+		replace the whole step that calls "processing the image
+		candidates" with the following step:
+
+		<ol>
+			<li>
+				Let <var>selected source</var> and <var>selected
+				pixel density</var> be the URL and pixel density
+				that results from
+				<a title="select an image source">selecting an image source</a>.
+		</ol>
+
+		Also in the HTML spec, in the algorithm "The user agent may at
+		any time run the following algorithm to update an
+		<a element>img</a> element's image in order to react to changes
+		in the environment.", make the following changes:
+
+		<ul>
+			<li>
+				Remove "does not have a srcset attribute
+				specified,"
+
+			<li>
+				Replace "processing the image candidates" with
+				"<a title="select an image source">selecting an
+				image source</a>".
+
+			<li>
+				Replace "If the img element's src, srcset, or
+				crossorigin attributes have been set, changed,
+				or removed" with "If the <a element>img</a>
+				element has experienced <a>relevant
+				mutations</a>"
+		</ul>
+
+		While at it, do the following changes elsewhere in the HTML spec:
+
+		<ul>
+			<li>
+				Replace "A user agent that obtains images
+				immediately must also synchronously update the
+				image data of an img element whenever that
+				element has its src, srcset, or crossorigin
+				attribute set, changed, or removed." with "A
+				user agent that obtains images immediately must
+				also synchronously <a>update the image data</a>
+				of an <a element>img</a> element whenever that
+				element experiences <a>relevant mutations</a>."
+
+			<li>
+				Replace "A user agent that obtains images on
+				demand must update the image data of an img
+				element whenever it needs the image data (i.e.
+				on demand), but only if the img element has a
+				src or srcset attribute, and only if the img
+				element is in the unavailable state. When an img
+				element's src, srcset, or crossorigin attribute
+				set, changed, or removed, if the user agent only
+				obtains images on demand, the img element must
+				return to the unavailable state." with "A user
+				agent that obtains images on demand must
+				<a>update the image data</a> of an
+				<a element>img</a> element whenever it needs the
+				image data (i.e. on demand), but only if the img
+				element is in the unavailable state. When an
+				<a element>img</a> element experiences
+				<a>relevant mutations</a>, if the user agent
+				only obtains images on demand, the
+				<a element>img</a> element must return to the
+				unavailable state."
+		</ul>
+	</div>
 
 	When asked to <dfn>select an image source</dfn> for a given <a element>img</a> element <var>el</var>,
 	user agents must do the following:
@@ -352,8 +457,7 @@ Selecting an Image Source</h4>
 
 		<li>
 			If <var>el</var>’s <a>list of source sets</a> is empty,
-			<p class='issue'>make the img throw an error, however that's done.</p>
-			Exit this algorithm.
+			return null as the URL and undefined as the pixel density and abort these steps.
 
 		<li>
 			Otherwise,
@@ -371,8 +475,7 @@ Selecting an Image Source</h4>
 			The intrinsic resolution of <var>el</var> is the density associated with <var>selected source</var>.
 
 		<li>
-			<p class='issue'>
-				Load the url of <var>selected source</var> into <var>el</var>, etc.
+			Return <var>selected source</var> and its associated pixel density.
 	</ol>
 
 	<p class='issue'>
@@ -411,7 +514,7 @@ Updating the List of Source Sets</h4>
 							let <var>source set</var> be an empty <a>source set</a>.
 
 						<li>
-							If <var>child</var> has a <a element-attr for="source">sizes</a> attribute,
+							If <var>child</var> has a <a element-attr for="img">sizes</a> attribute,
 							<a>parse its sizes attribute</a>
 							and let <var>source set</var>’s <a>source size list</a> be the returned value.
 							Otherwise,
