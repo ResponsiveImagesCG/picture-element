@@ -331,8 +331,7 @@ The <a element>picture</a> Element</h2>
 	it merely provides a context for its contained <a element>img</a>
 	that enables it to choose from multiple source urls.
 
-	An <a element>img</a> element is associated with a <dfn export>list of source sets</dfn>,
-	which is a list of zero or more <a>source sets</a>.
+	An <a element>img</a> element is associated with a <a>source set</a>.
 
 	A <dfn export>source set</dfn> is a set of zero or more <a>image sources</a>,
 	optionally a <a>source size list</a>,
@@ -464,15 +463,15 @@ Selecting an Image Source</h4>
 
 	<ol>
 		<li>
-			<a>Update the list of source sets</a> for <var>el</var>.
+			<a>Update the source set</a> for <var>el</var>.
 
 		<li>
-			If <var>el</var>’s <a>list of source sets</a> is empty,
+			If <var>el</var>’s <a>source set</a> is empty,
 			return null as the URL and undefined as the pixel density and abort these steps.
 
 		<li>
 			Otherwise,
-			take the first <a>source set</a> in <var>el</var>’s <a>list of source sets</a>
+			take <var>el</var>’s <a> <a>source set</a>
 			and let it be <var>source set</var>.
 
 		<li>
@@ -495,19 +494,20 @@ Selecting an Image Source</h4>
 		but similar to <code>srcset</code>.
 		That okay?
 
-<h4 id='update-source-sets'>
-Updating the List of Source Sets</h4>
+<h4 id='update-source-set'>
+Updating the Source Set</h4>
 
-	When asked to <dfn>update the list of source sets</dfn> for a given <a element>img</a> element <var>el</var>,
+	When asked to <dfn>update the source set</dfn> for a given <a element>img</a> element <var>el</var>,
 	user agents must do the following:
 
 	<ol>
 		<li>
-			Initially set <var>el</var>’s <a>list of source sets</a> to the empty list.
+			Initially set <var>el</var>’s <a>source set</a> to an empty <a>source set</a>.
 
 		<li>
-		 If <var>el</var> has a parent node and that is a <a element>picture</a> element, let <var>elements</var> be an array containing <var>el</var>’s parent node's child elements, retaining relative order.
-		 Otherwise, let <var>elements</var> be array containing only <var>el</var>.
+			 If <var>el</var> has a parent node and that is a <a element>picture</a> element,
+			 let <var>elements</var> be an array containing <var>el</var>’s parent node's child elements, retaining relative order.
+			 Otherwise, let <var>elements</var> be array containing only <var>el</var>.
 
 		<li>
 			Iterate through <var>elements</var>,
@@ -541,10 +541,10 @@ Updating the List of Source Sets</h4>
 							append the <var>child</var>'s src attribute value to the <a>source set</a>.
 
 						<li>
-							Add the returned <a>source set</a> to the end of the <a>list of source sets</a>.
+							Set the returned <a>source set</a> to be <var>el</var>'s <a>source set</a>.
 
 						<li>
-							Exit the "Updating the List of Source Sets" algorithm.
+							Exit the "Updating the Source Set" algorithm.
 					</ol>
 
 				<li>
@@ -557,7 +557,8 @@ Updating the List of Source Sets</h4>
 					continue to the next child.
 
 				<li>
-					<a title="parse a srcset attribute">Parse <var>child</var>’s srcset attribute</a> and let the returned <a>source set</a> be <var>source set</var>.
+					<a title="parse a srcset attribute">Parse <var>child</var>’s srcset attribute</a> and
+					let the returned <a>source set</a> be <var>source set</var>.
 
 				<li>
 					If <var>source set</var> has zero <a>image sources</a>,
@@ -591,7 +592,11 @@ Updating the List of Source Sets</h4>
 					<a>Normalize the source densities</a> of <var>source set</var>.
 
 				<li>
-					Append <var>source set</var> to <var>el</var>’s <a>list of source sets</a>.
+					Set <a>source set</a> to be <var>el</var>'s <a>source set</a>.
+
+				<li>
+					Exit the "Updating the Source Set" algorithm.
+
 			</ol>
 	</ol>
 
