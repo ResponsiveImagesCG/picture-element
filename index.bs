@@ -287,36 +287,41 @@ Examples of usage</h3>
 <h3 id='relationship-to-srcset'>
 Relationship to <code>srcset</code></h3>
 
-	The <code>srcset</code> attribute allows authors to define various
-	image resources and “hints” that assist a user agent in determining
-	the most appropriate image source to display. Given a set of image
-	resources, the user agent has the option of either following or
-	overriding the author’s declarations to optimize the user experience
-	based on criteria such as <a href=
-	"http://usecases.responsiveimages.org/#device-pixel-ratio-based-selection">
-	display density</a>, network connection type, user preferences, and
-	so on.
+	This specification replaces the original <code>srcset</code> proposal 
+	and <a href="#parse-srcset-attr">extends the <code>srcset</code> 
+	attribute</a> to adequately address the 
+	<a href="http://usecases.responsiveimages.org/#h3_viewport-based-selection">
+	viewport based selection</a> use case.
 
-	The <code>picture</code> element defines conditions under which the
-	user agent needs to follow the author's explicit instructions when
-	selecting which resource to display. This includes image sources with
-	inherent sizes designed to align with layout variations specified in
-	CSS media queries (see: <a href=
-	"http://usecases.responsiveimages.org/#design-breakpoints">design
-	breakpoints</a>, and <a href=
-	"http://usecases.responsiveimages.org/#relative-units">relative
-	units</a>) or content variations for increased clarity and focus
-	(i.e., <a href=
-	"http://usecases.responsiveimages.org/#art-direction"><q>art
-	direction</q></a>) based on the client’s viewport.
+	The <code>srcset</code> attribute allows authors to provide a UA with a set 
+	of image resources and dimensions, rather than a set of explicit resource-
+	selection heuristics. Given a set of image resources and their dimensions, 
+	the UA can then select the most appropriate resource based on criteria such 
+	as <a href="http://usecases.responsiveimages.org/#h3_viewport-based-selection">
+	viewport size</a>,
+	<a href="http://usecases.responsiveimages.org/#device-pixel-ratio-based-selection">
+	display density</a>,
+	<a href="http://usecases.responsiveimages.org/#user-control-over-sources">
+	network connection speed or type</a>,
+	<a href="http://usecases.responsiveimages.org/#user-control-over-sources">
+	user preference</a>, and so on.
 
-	The proposed solutions are not mutually exclusive. They work together
-	to address the complete set of <a href=
-	"http://usecases.responsiveimages.org/">use cases and requirements
-	for responsive images</a> (see [[!respimg-usecases]]).
+	The picture element defines conditions under which the UA should follow the 
+	author’s explicit instructions in selecting the most appropriate resource to 
+	display. This includes image sources with intended to be displayed at 
+	specific breakpoints as defined by CSS media queries (see: 
+	<a href="http://usecases.responsiveimages.org/#design-breakpoints">
+	design breakpoints</a> and 
+	<a href="http://usecases.responsiveimages.org/#relative-units">relative units</a>
+	) or content variations for increased clarity and focus based on the size of 
+	the client’s viewport (see: 
+	<a href="http://usecases.responsiveimages.org/#art-direction"><q>art direction
+	</q></a>).
 
-	Furthermore, this specification <a href="#parse-srcset-attr">extends the <code>srcset</code> attribute</a>
-	to adequately address the <a href= "http://usecases.responsiveimages.org/#h3_viewport-based-selection">viewport based selection</a> use case.
+	The proposed solutions are not mutually exclusive, and work together to address 
+	the complete set of <a href="http://usecases.responsiveimages.org/">use cases 
+	and requirements for responsive images</a> for responsive images (see 
+	[[!respimg-usecases]]).
 
 <h2 id='defs'>
 Definitions</h2>
