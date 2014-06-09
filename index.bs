@@ -1,7 +1,7 @@
 <h1>The picture Element</h1>
 <pre class='metadata'>
 Group: ricg
-Status: ED
+Status: WD
 ED: http://picture.responsiveimages.org
 Shortname: picture-element
 Level: 1
