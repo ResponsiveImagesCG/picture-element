@@ -1049,6 +1049,10 @@ Parsing a <code>sizes</code> Attribute</h4>
 	This is to enable future extensions,
 	and protect against simple author errors such as a final trailing comma.
 
+	<p class="note">
+		While this syntax is largely based on the now-defunct <code>srcn</code> proposal for responsive images,
+		<code>sizes</code> differs in that percentage-based values are not allowed.
+
 <h4 id='normalize-source-densities'>
 Normalizing the Source Densities</h4>
 

@@ -613,14 +613,14 @@ body > * { opacity: .5; }
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20140701>1 July 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140801>1 August 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org/>http://picture.responsiveimages.org/</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org/>http://picture.responsiveimages.org/</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:simonp@opera.com>Simon Pieters</a> (<span class="p-org org">Opera Software</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dd class="p-author h-card vcard"><span class="p-name fn">Marcos Cáceres</span> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org/>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org/>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=https://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 1 July 2014,
+In addition, as of 1 August 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -630,7 +630,8 @@ Parts of this work may be from another specification document.  If so, those par
 </div>
 
 <h2 class="no-num no-toc no-ref heading settled heading" id=abstract><span class=content>Abstract</span></h2>
-<p class=p-summary data-fill-with=abstract>This specification defines the HTML <code>picture</code> element and extends the <code>img</code> and <code>source</code> elements to allow authors to declaratively control or give hints to the user agent about which image resource to use, based on the screen pixel density, viewport size, image format, and other factors.
+<p class=p-summary data-fill-with=abstract><p>This specification defines the HTML <code>picture</code> element and extends the <code>img</code> and <code>source</code> elements to allow authors to declaratively control or give hints to the user agent about which image resource to use, based on the screen pixel density, viewport size, image format, and other factors.</p>
+
 </p>
 <div data-fill-with=at-risk></div>
 
@@ -1631,6 +1632,10 @@ Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-size
 	if the preceding entries in the list weren’t used.
 	This is to enable future extensions,
 	and protect against simple author errors such as a final trailing comma.</p>
+
+	<p class=note>
+		While this syntax is largely based on the now-defunct <code>srcn</code> proposal for responsive images,
+		<code>sizes</code> differs in that percentage-based values are not allowed.
 
 <h4 class="heading settled heading" data-level=3.1.5 id=normalize-source-densities><span class=secno>3.1.5 </span><span class=content>
 Normalizing the Source Densities</span><a class=self-link href=#normalize-source-densities></a></h4>
